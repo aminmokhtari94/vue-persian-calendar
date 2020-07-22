@@ -2,16 +2,35 @@
   "name": "vue-persian-calendar",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+  "main": "dist/persian-calendar.umd.js",
+  "module": "dist/persian-calendar.esm.js",
+  "unpkg": "dist/persian-calendar.min.js",
+  "browser": {
+    "./sfc": "src/persian-calendar.vue"
   },
-  "dependencies": {
-    "core-js": "^3.6.5",
-    "vue": "^2.6.11"
+  "files": [
+    "dist/*",
+    "src/*",
+    "attributes.json",
+    "tags.json"
+  ],
+  "vetur": {
+    "tags": "tags.json",
+    "attributes": "attributes.json"
+  },
+  "scripts": {
+    "build": "npm run build:umd & npm run build:es & npm run build:unpkg",
+    "build:umd": "rollup --config build/rollup.config.js --format umd --file dist/my-component.umd.js",
+    "build:es": "rollup --config build/rollup.config.js --format es --file dist/my-component.esm.js",
+    "build:unpkg": "rollup --config build/rollup.config.js --format iife --file dist/my-component.min.js"
   },
   "devDependencies": {
+    "core-js": "^3.6.5",
+    "vue": "^2.6.11",
+    "rollup": "^1.17.0",
+    "@rollup/plugin-buble": "^0.21.3",
+    "@rollup/plugin-commonjs": "^11.1.0",
+    "rollup-plugin-vue": "^5.0.1",
     "@vue/cli-plugin-babel": "~4.4.0",
     "@vue/cli-plugin-eslint": "~4.4.0",
     "@vue/cli-service": "~4.4.0",
