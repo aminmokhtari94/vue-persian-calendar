@@ -1,0 +1,81 @@
+$dusty-gray: #999;
+$alto: #ddd;
+$bittersweet: #ff6f69;
+$buttermilk: rgba(255, 238, 173, 0.4);
+$vista-blue: #42b983;
+$pink: rgba(255, 182, 193, 0.3);
+$calendar-border: 1px solid $alto;
+
+@mixin calendar-row {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+@mixin calendar-cell {
+  width: 100%;
+  overflow: hidden;
+  padding: 0.5rem;
+  border-right: $calendar-border;
+  border-top: $calendar-border;
+  user-select: none;
+
+  &:last-child {
+    border-left: $calendar-border;
+  }
+}
+#days-header {
+  @include calendar-row;
+  div {
+    @include calendar-cell;
+    font-weight: bold;
+    cursor: default;
+  }
+}
+#persian-calendar {
+  background-color: white;
+  direction: rtl;
+  .calendar-week {
+    @include calendar-row;
+    .day {
+      @include calendar-cell;
+      font-weight: bold;
+      height: 100px;
+      cursor: default;
+
+      &.past {
+        opacity: 0.6;
+      }
+
+      &.not-current-month {
+        color: $alto;
+      }
+
+      &.today {
+        background-color: $buttermilk;
+      }
+
+      &.active {
+        background-color: $pink;
+      }
+
+      .event-list {
+        font-size: 0.8rem;
+        color: $vista-blue;
+        font-weight: bold;
+        list-style: none;
+        padding: 0;
+        margin: 0.5rem 0 0.5rem 0;
+
+        li {
+          white-space: nowrap;
+        }
+      }
+    }
+    &:last-child {
+      .day {
+        border-bottom: $calendar-border;
+      }
+    }
+  }
+}
