@@ -1,44 +1,39 @@
 <template>
     <div id="persian-calendar">
-      <div class="flex flex-row bg-gray-200">
-  <div class="text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">1</div>
-  <div class="text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">2</div>
-  <div class="text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">3</div>
-</div>
-<div class="grid grid-cols-3 gap-4">
-  <div>1</div>
-  <!-- ... -->
-  <div>9</div>
-</div>
-      <div class="vx-row m-5" >
-        <div class="flex items-center" style="width: 100px">
-          <span class="cursor-pointer bg-primary text-white rounded-full feather-icon select-none relative" @click="subtractMonth">
+      <div id="vpc_header" slot="header">
+        <div id="vpc_date-control">
+          <div class="vpc_control-btn" @click="subtractMonth">
+            <v-icon name="chevron-right"></v-icon>
+          </div>
+          <span class="vpc_now-date">{{currentDate.format('jMMMM jYYYY')}}</span>
+          <div class="vpc_control-btn" @click="addMonth">
             <v-icon name="chevron-left"></v-icon>
-          </span>
-          
-          <span class="mx-3 text-xl font-medium whitespace-no-wrap">{{currentDate.format('jMMMM jYYYY')}}</span>
-          <span class="cursor-pointer bg-primary text-white rounded-full feather-icon select-none relative" @click="addMonth">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                 class="feather feather-chevron-left w-5 h-5 m-1">
-              <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-          </span>
+          </div>
+          <div class="vpc_today-btn" @click="goToday">امروز</div>
         </div>
       </div>
-      <!--DAYS HEADER-->
-      <div  id="days-header">
-        <div>شنبه</div>
-        <div>یکشنبه</div>
-        <div>دوشنبه</div>
-        <div>سه شنبه</div>
-        <div>چهار شنبه</div>
-        <div>پنج شنبه</div>
-        <div>جمعه</div>
-      </div>
-
-      <div v-for="week in weeks" :key="week.uid" class="calendar-week">
-        <Day v-for="day in week" :key="day.uid" :day="day"></Day>
-      </div>
+      <transition
+              :name="transitionAction"
+              @after-leave="afterLeave"
+      >
+        <div v-if="startTransition">
+          <div id="vpc_calendar">
+            <!--DAYS HEADER-->
+            <div id="vpc_days-header">
+              <div>شنبه</div>
+              <div>یکشنبه</div>
+              <div>دوشنبه</div>
+              <div>سه شنبه</div>
+              <div>چهار شنبه</div>
+              <div>پنج شنبه</div>
+              <div>جمعه</div>
+            </div>
+            <div v-for="week in weeks" :key="week.uid" class="vpc_week">
+              <Day v-for="day in week" :key="day.uid" :day="day" :current-date="currentDate"></Day>
+            </div>
+          </div>
+        </div>
+      </transition>
     </div>
 </template>
 
@@ -49,7 +44,9 @@ export default {
   name: 'PersianCalendar',
   data () {
     return {
-      currentDate: null
+      currentDate: null,
+      startTransition: true,
+      transitionAction: 'slide-right'
     }
   },
   computed:{
@@ -110,15 +107,34 @@ export default {
       return weeks
     }
   },
+  watch: {
+    currentDate () {
+      this.startTransition = false
+    }
+  },
   created () {
     this.currentDate = this.$moment()
   },
   methods:{
     addMonth () {
+      this.transitionAction = 'slide-left'
       this.currentDate = this.$moment(this.currentDate).add(1, 'month')
     },
     subtractMonth () {
+      this.transitionAction = 'slide-right'
       this.currentDate = this.$moment(this.currentDate).subtract(1, 'month')
+    },
+    goToday () {
+      if (this.currentDate.isBefore(this.$moment(), 'month')) {
+        this.transitionAction = 'slide-left'
+        this.currentDate = this.$moment()
+      } else if (this.currentDate.isAfter(this.$moment(), 'month')) {
+        this.transitionAction = 'slide-right'
+        this.currentDate = this.$moment()
+      }
+    },
+    afterLeave () {
+      this.startTransition = true
     }
   },
   components: {

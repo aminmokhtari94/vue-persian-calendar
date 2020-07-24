@@ -2,7 +2,6 @@
 import component from './PersianCalendar.vue'
 
 import './assets/style.scss'
-import './assets/tailwind.css'
 
 // Declare install function executed by Vue.use()
 export function install (Vue) {

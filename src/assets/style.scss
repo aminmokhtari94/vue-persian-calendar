@@ -1,10 +1,38 @@
-$dusty-gray: #999;
-$alto: #ddd;
-$bittersweet: #ff6f69;
-$buttermilk: rgba(255, 238, 173, 0.4);
-$vista-blue: #42b983;
-$pink: rgba(255, 182, 193, 0.3);
-$calendar-border: 1px solid $alto;
+/** Extra small devices (phones, 600px and down) */
+$xs: "screen and (max-width: 600px)";
+/** Small devices (portrait tablets and large phones, 601px to 768px) */
+$sm: 'screen and (min-width: 601px) and (max-width: 768px)';
+/** Medium devices (landscape tablets, 769px to 991px) */
+$md: 'screen and (min-width: 769px) and (max-width: 991px)';
+/** Large devices (laptops/desktops, 992px to 1200px) */
+$lg: 'screen and (min-width: 992px) and (max-width: 1200px)';
+/** Extra large devices (large laptops and desktops, 1201px and up) */
+$xl: 'screen and (min-width: 1201px)';
+// The mdia mixin
+@mixin media( $selectors... ) {
+  $selector: '';
+  @each $s in $selectors {
+    @if $selector == '' {
+      $selector: $s;
+    } @else {
+      $selector: $selector + ', ' + $s;
+    }
+  }
+  @media #{unquote($selector)}{
+    @content;
+  }
+}
+
+$primary_color: #7367F0;
+$background: #fff;
+$past_background: rgb(250, 250, 250);
+$not_current_month_background: rgb(236, 236, 236);
+$days_header_color: #626262;
+
+$event_blue: #42b983;
+
+$border_color: #ddd;
+$calendar_border: 1px solid $border_color;
 
 @mixin calendar-row {
   display: flex;
@@ -16,66 +44,171 @@ $calendar-border: 1px solid $alto;
   width: 100%;
   overflow: hidden;
   padding: 0.5rem;
-  border-right: $calendar-border;
-  border-top: $calendar-border;
+  border-right: $calendar_border;
+  border-top: $calendar_border;
   user-select: none;
+  background: $background;
 
   &:last-child {
-    border-left: $calendar-border;
+    border-left: $calendar_border;
   }
 }
-#days-header {
-  @include calendar-row;
-  div {
-    @include calendar-cell;
-    font-weight: bold;
-    cursor: default;
-  }
+
+@mixin shadow-text {
+  background-color: #565656;
+  color: transparent;
+  text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.5);
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
 }
+
 #persian-calendar {
-  background-color: white;
+  font: inherit;
+  font-size: 14px;
   direction: rtl;
-  .calendar-week {
-    @include calendar-row;
-    .day {
-      @include calendar-cell;
-      font-weight: bold;
-      height: 100px;
-      cursor: default;
 
-      &.past {
-        opacity: 0.6;
+  #vpc_header {
+    padding: 20px 15px;
+
+    #vpc_date-control {
+      display: flex;
+      justify-content: flex-start;
+      font-size: 1rem;
+
+      .vpc_control-btn {
+        width: 1rem;
+        height: 1rem;
+        padding: 0.3rem;
+        border-radius: 9999px !important;
+        cursor: pointer !important;
+        background-color: $primary_color !important;
+        color: #fff !important;
       }
 
-      &.not-current-month {
-        color: $alto;
+      .vpc_now-date {
+        margin: auto .75rem;
+        white-space: nowrap;
       }
 
-      &.today {
-        background-color: $buttermilk;
+      .vpc_today-btn {
+        margin: 0 10px;
+        height: 1.3rem;
+        padding: 0.2rem 1.2rem;
+        border-radius: 15px !important;
+        cursor: pointer !important;
+        background-color: $primary_color !important;
+        color: #fff !important;
       }
+    }
+  }
 
-      &.active {
-        background-color: $pink;
-      }
+  #vpc_calendar {
+    border-radius: 15px;
+    box-shadow: 0 4px 25px 0 rgba(0, 0, 0, .1);
 
-      .event-list {
-        font-size: 0.8rem;
-        color: $vista-blue;
-        font-weight: bold;
-        list-style: none;
-        padding: 0;
-        margin: 0.5rem 0 0.5rem 0;
+    #vpc_days-header {
+      @include calendar-row;
 
-        li {
-          white-space: nowrap;
+      div {
+        @include calendar-cell;
+        color: $days_header_color;
+        font-size: 0.9rem;
+        line-height: 0.6rem;
+        text-align: center;
+        cursor: default;
+
+        &:first-child {
+          border-top-right-radius: 15px;
+        }
+
+        &:last-child {
+          border-top-left-radius: 15px;
         }
       }
     }
-    &:last-child {
-      .day {
-        border-bottom: $calendar-border;
+
+    .vpc_week {
+      @include calendar-row;
+
+      .vpc_day {
+        @include calendar-cell;
+        font-weight: bold;
+        height: 120px;
+        cursor: default;
+
+        &.vpc_past {
+          background-color: $past_background;
+
+          span {
+            @include shadow-text;
+          }
+        }
+
+        &.vpc_not-current-month {
+          background-color: $not_current_month_background;
+
+          span {
+            @include shadow-text;
+          }
+        }
+
+        &.vpc_today div {
+          width: 1rem;
+          height: 1rem;
+          padding: 0.3rem;
+          border-radius: 9999px !important;
+          background-color: $primary_color !important;
+          color: #fff !important;
+          text-align: center;
+        }
+
+        .vpc_event-list {
+          font-size: 0.8rem;
+          color: $event_blue;
+          font-weight: bold;
+          list-style: none;
+          padding: 0;
+          margin: 0.5rem 0 0.5rem 0;
+
+          li {
+            white-space: nowrap;
+          }
+        }
+      }
+
+      &:last-child {
+        .vpc_day {
+          border-bottom: $calendar_border;
+
+          &:first-child {
+            border-bottom-right-radius: 15px;
+          }
+
+          &:last-child {
+            border-bottom-left-radius: 15px;
+          }
+        }
       }
     }
   }
+
+  .slide-left-enter-active, .slide-right-enter-active {
+    transition: all .2s ease;
+  }
+
+  .slide-left-leave-active, .slide-right-leave-active {
+    transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+
+  .slide-left-enter, .slide-right-leave-to {
+    transform: translateX(10px);
+    opacity: 0;
+  }
+
+  .slide-left-leave-to, .slide-right-enter {
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+
 }

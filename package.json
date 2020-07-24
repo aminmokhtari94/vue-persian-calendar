@@ -1,7 +1,7 @@
 {
   "name": "vue-persian-calendar",
-  "version": "0.1.2",
-  "private": true,
+  "version": "0.1.3",
+  "private": false,
   "main": "dist/persian-calendar.umd.js",
   "module": "dist/persian-calendar.esm.js",
   "unpkg": "dist/persian-calendar.min.js",
@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/aminmokhtari94/vue-persian-calendar.git"
   },
-  "description": "## Vue Persian Calendar",
+  "description": "WIP: Vue Persian Calendar",
   "bugs": {
     "url": "https://github.com/aminmokhtari94/vue-persian-calendar/issues"
   },
@@ -62,15 +62,13 @@
     "eslint": "^6.7.0",
     "eslint-plugin-vue": "^6.2.2",
     "rollup": "^2.22.2",
-    "rollup-plugin-postcss": "^3.1.3",
+    "rollup-plugin-sass": "^1.2.2",
     "rollup-plugin-terser": "^6.1.0",
     "rollup-plugin-vue": "^6.0.0-beta.9",
-    "sass": "^1.26.10",
     "sass-loader": "^9.0.2",
     "vue": "^2.6.11",
     "vue-icon": "^2.1.2",
-    "vue-template-compiler": "^2.6.11",
-    "tailwindcss": "^1.5.2"
+    "vue-template-compiler": "^2.6.11"
   },
   "browserslist": [
     "> 1%",

@@ -1,6 +1,6 @@
 <template>
   <div :class="classObject" @click="captureClick">
-    {{ day.format('M/D') }}
+    <div><span>{{ day.format('D') }}</span></div>
     <ul class="event-list">
 <!--        <li v-for="event in events" :key="event">{{ event.description }}</li>-->
     </ul>
@@ -11,7 +11,8 @@
 export default {
   name: 'Day',
   props:{
-    day: Object
+    day: Object,
+    currentDate: Object
   },
   computed: {
     events () {
@@ -22,10 +23,10 @@ export default {
       // const eventFormActive = this.$store.state.eventFormActive
       const today = this.day.isSame(this.$moment(), 'day')
       return {
-        day: true,
-        today,
-        past: this.day.isSameOrBefore(this.$moment(), 'day') && !today
-        // active: eventFormDate.isSame(this.day, 'day') && eventFormActive
+        'vpc_day': true,
+        'vpc_today': today,
+        'vpc_past': this.day.isSameOrBefore(this.$moment(), 'day') && !today,
+        'vpc_not-current-month': !this.day.isSame(this.currentDate, 'month')
       }
     }
   },

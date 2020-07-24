@@ -3,7 +3,7 @@ import vue from 'rollup-plugin-vue' // Handle .vue SFC files
 import buble from '@rollup/plugin-buble' // Transpile/polyfill with reasonable browser support
 // import replace from '@rollup/plugin-replace'
 import { terser }  from 'rollup-plugin-terser'
-import postcss from 'rollup-plugin-postcss'
+import sass from 'rollup-plugin-sass'
 
 export default {
   input: 'src/entry.js', // Path relative to package.json
@@ -25,14 +25,7 @@ export default {
         isProduction: true
       }
     }),
-    postcss({
-      config: {
-        path: './postcss.config.js'
-      },
-      extensions: ['.css'],
-      extract: true,
-      minimize: true
-    }),
+    sass(),
     buble(), // Transpile to ES5
     terser()
   ]
