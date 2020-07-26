@@ -140,7 +140,7 @@ $calendar_border: 1px solid $border_color;
         &.vpc_past {
           background-color: $past_background;
 
-          span {
+          .vpc_day-number span {
             @include shadow-text;
           }
         }
@@ -148,7 +148,7 @@ $calendar_border: 1px solid $border_color;
         &.vpc_not-current-month {
           background-color: $not_current_month_background;
 
-          span {
+          .vpc_day-number span {
             @include shadow-text;
           }
         }

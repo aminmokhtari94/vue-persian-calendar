@@ -133,6 +133,7 @@ export default {
         this.currentDate = this.$moment()
       }
     },
+    // Transition show month after fade out
     afterLeave () {
       this.startTransition = true
     }
