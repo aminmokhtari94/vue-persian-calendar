@@ -55,7 +55,6 @@
     "sass-loader": "^9.0.2",
     "vue": "^2.6.11",
     "vue-template-compiler": "^2.6.11",
-    "vuex": "^3.5.1",
     "sass": "^1.26.10"
   },
   "browserslist": [

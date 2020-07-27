@@ -7901,11 +7901,6 @@ vue-hot-reload-api@^2.3.0:
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"
   integrity sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==
 
-vue-icon@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/vue-icon/-/vue-icon-2.1.2.tgz#4127ca0624096eb8dec7896a44ceeaefddb9abfa"
-  integrity sha512-QaIbsUYFuup1pBhecBpvp2qnjknjx72HpQswB7LUap6cV9E/KQDWWbLssf7mnsqaCbxmvc5L937IP5WxeOT6lA==
-
 vue-jalali-moment@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/vue-jalali-moment/-/vue-jalali-moment-1.0.0.tgz#c7ae316c6e2c17597ed0a4bbef33574c1323e8f4"
@@ -7949,11 +7944,6 @@ vue@^2.6.11:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==
-
-vuex@^3.5.1:
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.5.1.tgz#f1b8dcea649bc25254cf4f4358081dbf5da18b3d"
-  integrity sha512-w7oJzmHQs0FM9LXodfskhw9wgKBiaB+totOdb8sNzbTB2KDCEEwEs29NzBZFh/lmEK1t5tDmM1vtsO7ubG1DFw==
 
 watchpack-chokidar2@^2.0.0:
   version "2.0.0"
