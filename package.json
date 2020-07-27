@@ -42,6 +42,7 @@
     "serve": "vue-cli-service serve"
   },
   "dependencies": {
+    "vazir-font": "^26.0.2",
     "vue-jalali-moment": "^1.0.0"
   },
   "devDependencies": {

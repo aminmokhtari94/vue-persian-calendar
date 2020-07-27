@@ -1,10 +1,12 @@
 <template>
   <div :class="classObject" @click="$emit('on-day-click', day)">
-    <div class="vpc_day-number"><span>{{ day.format('D') }}</span></div>
+    <div class="vpc_day-number">{{ day.format('D').toPersianDigits() }}</div>
     <ul class="vpc_event-list">
-        <li v-for="event in events" :key="event.description" class="vpc_event" @click.stop="$emit('on-event-click', event)">
-          <span>&#x25CF; </span>{{ event.startTime.format('HH:mm') }}-{{ event.endTime.format('HH:mm') }}: {{ event.description }}
-        </li>
+      <li v-for="event in events" :key="event.description" class="vpc_event" @click.stop="$emit('on-event-click', event)">
+        <div :style="{'background-color':event.color}" class="vpc_event-ball"></div>
+        <span class="vpc_event-time">{{ event.startTime.format('HH:mm').toPersianDigits() }}</span>
+        <span class="vpc_event-description">{{ event.description }}</span>
+      </li>
     </ul>
   </div>
 </template>
@@ -20,7 +22,7 @@ export default {
     events () {
       // return this.$store.state.events.filter(event => event.date.isSame(this.day, 'day'))
       return [
-        {date:this.day, startTime:this.day, endTime:this.day, description:'amin'},
+        {date:this.day, startTime:this.day, endTime:this.day, description:'امین مختاری'},
         {date:this.day, startTime:this.day, endTime:this.day, description:'ali'}
       ]
     },

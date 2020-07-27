@@ -7865,6 +7865,11 @@ vary@~1.1.2:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
 
+vazir-font@^26.0.2:
+  version "26.0.2"
+  resolved "https://registry.yarnpkg.com/vazir-font/-/vazir-font-26.0.2.tgz#cd2bb68110da52059ac02634c5c38937e64cc340"
+  integrity sha512-1whCafuTSYmeG0kJFXVXvwKirUPyEkyE6NGYZ/YRhLDMTjERe6GtyaBJykKahP6vd6oPlEbWBp0ybbaCTbcqbA==
+
 vendors@^1.0.0:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/vendors/-/vendors-1.0.4.tgz#e2b800a53e7a29b93506c3cf41100d16c4c4ad8e"

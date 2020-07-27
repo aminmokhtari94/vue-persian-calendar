@@ -30,6 +30,7 @@ $not_current_month_background: rgb(236, 236, 236);
 $days_header_color: #626262;
 
 $event_blue: #42b983;
+$event_black: #262626;
 
 $border_color: #ddd;
 $calendar_border: 1px solid $border_color;
@@ -63,9 +64,82 @@ $calendar_border: 1px solid $border_color;
   background-clip: text;
 }
 
+@mixin text-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 1rem;
+}
+
+@font-face {
+  font-family: Vazir;
+  src: url('~vazir-font/dist/Vazir.eot');
+  src: url('~vazir-font/dist/Vazir.eot?#iefix') format('embedded-opentype'),
+  url('~vazir-font/dist/Vazir.woff2') format('woff2'),
+  url('~vazir-font/dist/Vazir.woff') format('woff'),
+  url('~vazir-font/dist/Vazir.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Vazir;
+  src: url('~vazir-font/dist/Vazir-Bold.eot');
+  src: url('~vazir-font/dist/Vazir-Bold.eot?#iefix') format('embedded-opentype'),
+  url('~vazir-font/dist/Vazir-Bold.woff2') format('woff2'),
+  url('~vazir-font/dist/Vazir-Bold.woff') format('woff'),
+  url('~vazir-font/dist/Vazir-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Vazir;
+  src: url('~vazir-font/dist/Vazir-Black.eot');
+  src: url('~vazir-font/dist/Vazir-Black.eot?#iefix') format('embedded-opentype'),
+  url('~vazir-font/dist/Vazir-Black.woff2') format('woff2'),
+  url('~vazir-font/dist/Vazir-Black.woff') format('woff'),
+  url('~vazir-font/dist/Vazir-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Vazir;
+  src: url('~vazir-font/dist/Vazir-Medium.eot');
+  src: url('~vazir-font/dist/Vazir-Medium.eot?#iefix') format('embedded-opentype'),
+  url('~vazir-font/dist/Vazir-Medium.woff2') format('woff2'),
+  url('~vazir-font/dist/Vazir-Medium.woff') format('woff'),
+  url('~vazir-font/dist/Vazir-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Vazir;
+  src: url('~vazir-font/dist/Vazir-Light.eot');
+  src: url('~vazir-font/dist/Vazir-Light.eot?#iefix') format('embedded-opentype'),
+  url('~vazir-font/dist/Vazir-Light.woff2') format('woff2'),
+  url('~vazir-font/dist/Vazir-Light.woff') format('woff'),
+  url('~vazir-font/dist/Vazir-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Vazir;
+  src: url('~vazir-font/dist/Vazir-Thin.eot');
+  src: url('~vazir-font/dist/Vazir-Thin.eot?#iefix') format('embedded-opentype'),
+  url('~vazir-font/dist/Vazir-Thin.woff2') format('woff2'),
+  url('~vazir-font/dist/Vazir-Thin.woff') format('woff'),
+  url('~vazir-font/dist/Vazir-Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+}
+
 #persian-calendar {
-  font: inherit;
-  font-size: 14px;
+  font-family: 'Vazir', sans-serif;
+  font-size: 1rem;
   direction: rtl;
 
   #vpc_header {
@@ -92,9 +166,7 @@ $calendar_border: 1px solid $border_color;
       }
 
       .vpc_today-btn {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        @include text-center;
         margin: 0 10px;
         height: 1.3rem;
         line-height: 1rem;
@@ -145,7 +217,7 @@ $calendar_border: 1px solid $border_color;
         &.vpc_past {
           background-color: $past_background;
 
-          .vpc_day-number span {
+          .vpc_day-number {
             @include shadow-text;
           }
         }
@@ -153,33 +225,51 @@ $calendar_border: 1px solid $border_color;
         &.vpc_not-current-month {
           background-color: $not_current_month_background;
 
-          .vpc_day-number span {
+          .vpc_day-number {
             @include shadow-text;
           }
         }
 
-        &.vpc_today div {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 1.2rem;
-          height: 1.2rem;
-          border-radius: 9999px !important;
-          background-color: $primary_color !important;
-          color: #fff !important;
-          text-align: center;
+        &.vpc_today {
+          .vpc_day-number {
+            @include text-center;
+            width: 1.2rem;
+            height: 1.2rem;
+            border-radius: 9999px !important;
+            background-color: $primary_color !important;
+            color: #fff !important;
+            text-align: center;
+          }
         }
 
         .vpc_event-list {
           font-size: 0.8rem;
-          color: $event_blue;
-          font-weight: bold;
+          color: $event_black;
           list-style: none;
           padding: 0;
           margin: 0.5rem 0 0.5rem 0;
 
-          li {
+          .vpc_event {
             white-space: nowrap;
+            display: flex;
+            align-items: center;
+
+
+            .vpc_event-ball {
+              width: 0.5rem;
+              height: 0.5rem;
+              background-color: #42b983;
+              border-radius: 99px;
+            }
+
+            .vpc_event-time {
+              @include text-center;
+              padding: 0 0.4rem;
+            }
+
+            .vpc_event-description {
+              @include text-center;
+            }
           }
         }
       }

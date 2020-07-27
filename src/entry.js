@@ -1,6 +1,9 @@
 // Import vue component
 import component from './PersianCalendar.vue'
 
+// Import utilities functions
+import './utils'
+
 // Declare install function executed by Vue.use()
 export function install (Vue) {
   if (install.installed) return

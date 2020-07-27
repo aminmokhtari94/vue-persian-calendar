@@ -134,9 +134,11 @@ export default {
       }
     },
     onDayClick (day) {
+      /* eslint no-console: "warn" */
       console.log(day)
     },
     onEventClick (event) {
+      /* eslint no-console: "warn" */
       console.log(event)
     },
     // Transition show month after fade out
