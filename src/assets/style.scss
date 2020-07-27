@@ -29,7 +29,7 @@ $past_background: rgb(250, 250, 250);
 $not_current_month_background: rgb(236, 236, 236);
 $days_header_color: #626262;
 
-$event_blue: #42b983;
+$event_green: #42b983;
 $event_black: #262626;
 
 $border_color: #ddd;
@@ -210,7 +210,6 @@ $calendar_border: 1px solid $border_color;
 
       .vpc_day {
         @include calendar-cell;
-        font-weight: bold;
         height: 120px;
         cursor: default;
 
@@ -242,6 +241,11 @@ $calendar_border: 1px solid $border_color;
           }
         }
 
+        .vpc_day-number {
+          font-weight: bold;
+          line-height: 1.2rem;
+        }
+
         .vpc_event-list {
           font-size: 0.8rem;
           color: $event_black;
@@ -258,7 +262,8 @@ $calendar_border: 1px solid $border_color;
             .vpc_event-ball {
               width: 0.5rem;
               height: 0.5rem;
-              background-color: #42b983;
+              display: table;
+              background-color: $event_green;
               border-radius: 99px;
             }
 
@@ -269,6 +274,7 @@ $calendar_border: 1px solid $border_color;
 
             .vpc_event-description {
               @include text-center;
+              font-weight: 500;
             }
           }
         }

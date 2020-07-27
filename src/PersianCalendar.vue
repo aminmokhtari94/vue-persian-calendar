@@ -5,7 +5,7 @@
           <div class="vpc_control-btn" @click="subtractMonth">
             <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </div>
-          <span class="vpc_now-date">{{currentDate.format('jMMMM jYYYY')}}</span>
+          <span class="vpc_now-date">{{currentDate.locale('fa').format('jMMMM jYYYY')}}</span>
           <div class="vpc_control-btn" @click="addMonth">
             <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
           </div>
@@ -16,7 +16,7 @@
               :name="transitionAction"
               @after-leave="afterLeave"
       >
-        <div v-if="startTransition">
+        <div v-if="currentDateChange">
           <div id="vpc_calendar">
             <!--DAYS HEADER-->
             <div id="vpc_days-header">
@@ -29,7 +29,21 @@
               <div>جمعه</div>
             </div>
             <div v-for="week in weeks" :key="week.uid" class="vpc_week">
-              <Day v-for="day in week" :key="day.uid" :day="day" :current-date="currentDate" @on-day-click="onDayClick" @on-event-click="onEventClick"></Day>
+              <div v-for="day in week" :key="day.uid" :class="dayClassObject(day)" @click="$emit('on-day-click', day)">
+                <div class="vpc_day-number">{{ day.format('D').toPersianDigits() }}</div>
+                <ul class="vpc_event-list">
+                  <li
+                      v-for="event in events.filter(e => e.date.isSame(day, 'day'))"
+                      :key="event.description"
+                      class="vpc_event"
+                      @click.stop="$emit('on-event-click', event)"
+                  >
+                    <div :style="{'background-color':event.color}" class="vpc_event-ball"></div>
+                    <span class="vpc_event-time">{{ event.startTime.format('HH:mm').toPersianDigits() }}</span>
+                    <span class="vpc_event-description">{{ event.description }}</span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -38,15 +52,14 @@
 </template>
 
 <script>
-import Day from './components/Day.vue'
-
 export default {
   name: 'PersianCalendar',
   data () {
     return {
       currentDate: null,
-      startTransition: true,
-      transitionAction: 'slide-right'
+      currentDateChange: true,
+      transitionAction: 'slide-right',
+      addEventModalShow: false
     }
   },
   computed:{
@@ -105,11 +118,17 @@ export default {
         }
       }
       return weeks
+    },
+    events () {
+      return [
+        {date:this.$moment(), startTime:this.$moment(), endTime:this.$moment(), description:'امین مختاری'},
+        {date:this.$moment().add(10, 'days'), startTime:this.$moment(), endTime:this.$moment(), description:'ali'}
+      ]
     }
   },
   watch: {
     currentDate () {
-      this.startTransition = false
+      this.currentDateChange = false
     }
   },
   created () {
@@ -133,21 +152,27 @@ export default {
         this.currentDate = this.$moment()
       }
     },
+    dayClassObject (day) {
+      // const eventFormDate = this.$store.state.eventFormDate
+      // const eventFormActive = this.$store.state.eventFormActive
+      const today = day.isSame(this.$moment(), 'day')
+      return {
+        'vpc_day': true,
+        'vpc_today': today,
+        'vpc_past': day.isSameOrBefore(this.$moment(), 'day') && !today,
+        'vpc_not-current-month': !day.isSame(this.currentDate, 'month')
+      }
+    },
     onDayClick (day) {
-      /* eslint no-console: "warn" */
-      console.log(day)
+      this.$emit('on-day-click', day)
     },
     onEventClick (event) {
-      /* eslint no-console: "warn" */
-      console.log(event)
+      this.$emit('on-event-click', event)
     },
     // Transition show month after fade out
     afterLeave () {
-      this.startTransition = true
+      this.currentDateChange = true
     }
-  },
-  components: {
-    Day
   }
 }
 </script>
