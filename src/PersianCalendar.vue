@@ -3,11 +3,11 @@
       <div id="vpc_header" slot="header">
         <div id="vpc_date-control">
           <div class="vpc_control-btn" @click="subtractMonth">
-            <v-icon name="chevron-right"></v-icon>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </div>
           <span class="vpc_now-date">{{currentDate.format('jMMMM jYYYY')}}</span>
           <div class="vpc_control-btn" @click="addMonth">
-            <v-icon name="chevron-left"></v-icon>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
           </div>
           <div class="vpc_today-btn" @click="goToday">امروز</div>
         </div>
@@ -29,7 +29,7 @@
               <div>جمعه</div>
             </div>
             <div v-for="week in weeks" :key="week.uid" class="vpc_week">
-              <Day v-for="day in week" :key="day.uid" :day="day" :current-date="currentDate"></Day>
+              <Day v-for="day in week" :key="day.uid" :day="day" :current-date="currentDate" @on-day-click="onDayClick" @on-event-click="onEventClick"></Day>
             </div>
           </div>
         </div>
@@ -133,6 +133,12 @@ export default {
         this.currentDate = this.$moment()
       }
     },
+    onDayClick (day) {
+      console.log(day)
+    },
+    onEventClick (event) {
+      console.log(event)
+    },
     // Transition show month after fade out
     afterLeave () {
       this.startTransition = true
@@ -143,3 +149,6 @@ export default {
   }
 }
 </script>
+<style lang="sass">
+  @import "assets/style"
+</style>

@@ -92,8 +92,13 @@ $calendar_border: 1px solid $border_color;
       }
 
       .vpc_today-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         margin: 0 10px;
         height: 1.3rem;
+        line-height: 1rem;
+        vertical-align: middle;
         padding: 0.2rem 1.2rem;
         border-radius: 15px !important;
         cursor: pointer !important;
@@ -154,9 +159,11 @@ $calendar_border: 1px solid $border_color;
         }
 
         &.vpc_today div {
-          width: 1rem;
-          height: 1rem;
-          padding: 0.3rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 1.2rem;
+          height: 1.2rem;
           border-radius: 9999px !important;
           background-color: $primary_color !important;
           color: #fff !important;

@@ -1,8 +1,6 @@
 // Import vue component
 import component from './PersianCalendar.vue'
 
-import './assets/style.scss'
-
 // Import Store Module
 import PersianCalendarModule from './store/PersianCalendarModule'
 

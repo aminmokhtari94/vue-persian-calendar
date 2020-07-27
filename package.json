@@ -1,6 +1,6 @@
 {
   "name": "vue-persian-calendar",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "private": false,
   "main": "dist/persian-calendar.umd.js",
   "browser": {
@@ -42,7 +42,6 @@
     "serve": "vue-cli-service serve"
   },
   "dependencies": {
-    "sass": "^1.26.10",
     "vue-jalali-moment": "^1.0.0"
   },
   "devDependencies": {
@@ -55,9 +54,9 @@
     "eslint-plugin-vue": "^6.2.2",
     "sass-loader": "^9.0.2",
     "vue": "^2.6.11",
-    "vue-icon": "^2.1.2",
     "vue-template-compiler": "^2.6.11",
-    "vuex": "^3.5.1"
+    "vuex": "^3.5.1",
+    "sass": "^1.26.10"
   },
   "browserslist": [
     "> 1%",

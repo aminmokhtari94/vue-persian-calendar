@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-import './assets/style.scss'
-
 import feather from 'vue-icon'
 Vue.use(feather, 'v-icon')
 

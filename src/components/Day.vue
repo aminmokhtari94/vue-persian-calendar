@@ -1,8 +1,8 @@
 <template>
-  <div :class="classObject" @click="captureClick(day)">
+  <div :class="classObject" @click="$emit('on-day-click', day)">
     <div class="vpc_day-number"><span>{{ day.format('D') }}</span></div>
     <ul class="vpc_event-list">
-        <li v-for="event in events" :key="event.description" class="vpc_event" @click="eventClick(event)">
+        <li v-for="event in events" :key="event.description" class="vpc_event" @click.stop="$emit('on-event-click', event)">
           <span>&#x25CF; </span>{{ event.startTime.format('HH:mm') }}-{{ event.endTime.format('HH:mm') }}: {{ event.description }}
         </li>
     </ul>
@@ -34,16 +34,6 @@ export default {
         'vpc_past': this.day.isSameOrBefore(this.$moment(), 'day') && !today,
         'vpc_not-current-month': !this.day.isSame(this.currentDate, 'month')
       }
-    }
-  },
-  methods: {
-    captureClick (day) {
-      return day
-      // console.log('day', day.format())
-    },
-    eventClick (event) {
-      return event
-      // console.log('event', event)
     }
   }
 }
