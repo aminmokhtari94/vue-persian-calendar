@@ -39,6 +39,16 @@ $calendar_border: 1px solid $border_color;
   display: flex;
   justify-content: flex-start;
   width: 100%;
+  /* Shorthand flex: 1 1 0 not supported by IE11 */
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;
+  flex-flow: row nowrap;
+  border-width: 0;
+  /* Allow week items to scroll if they are too tall */
+  position: relative;
+  overflow-y: auto;
+  -ms-overflow-style: none;
 }
 
 @mixin calendar-cell {
@@ -49,10 +59,6 @@ $calendar_border: 1px solid $border_color;
   border-top: $calendar_border;
   user-select: none;
   background: $background;
-
-  &:last-child {
-    border-left: $calendar_border;
-  }
 }
 
 @mixin shadow-text {
@@ -201,12 +207,19 @@ $calendar_border: 1px solid $border_color;
 
         &:last-child {
           border-top-left-radius: 15px;
+          border-left: $calendar_border;
         }
       }
     }
 
     .vpc_week {
       @include calendar-row;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
 
       .vpc_day {
         @include calendar-cell;
@@ -246,37 +259,143 @@ $calendar_border: 1px solid $border_color;
           line-height: 1.2rem;
         }
 
-        .vpc_event-list {
-          font-size: 0.8rem;
-          color: $event_black;
-          list-style: none;
-          padding: 0;
-          margin: 0.5rem 0 0.5rem 0;
+        &:last-child {
+          border-left: $calendar_border;
+        }
+      }
 
-          .vpc_event {
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
+      /* Events */
+      .vpc_event {
+        @include text-center;
+        font-size: 0.9rem;
+        padding-left: 0.78rem;
+        border-color: #e0e0f0;
+        border-radius: 0.5rem;
+        text-overflow: ellipsis;
+        position: absolute;
+        white-space: nowrap;
+        overflow: hidden;
+        background-color: #666;
+        color: #fff;
+        user-select: none;
+
+        &.offset0 {
+          right: 0;
+        }
+
+        $i: 1;
+        @while $i <= 7 {
+          &.span#{$i} {
+            text-align: center;
+            width: calc((#{$i+'00%'} / 7) - 0.75em);
+          }
+          &.offset#{$i} {
+            right: calc((#{$i+'00%'} / 7));
+          }
+          $i: $i+1;
+        }
+
+        &.isHovered {
+          filter: brightness(95%);
+        }
+
+        //&.span4, &.span5, &.span6, &.span7,{
+        //  .vpc_event-start-time,
+        //  .vpc_event-end-time,
+        //  .vpc_event-start-date,
+        //  .vpc_event-end-date {
+        //    display: block;
+        //  }
+        //}
 
 
-            .vpc_event-ball {
-              width: 0.5rem;
-              height: 0.5rem;
-              display: table;
-              background-color: $event_green;
-              border-radius: 99px;
-            }
+        &.continued {
+          border-right-style: none;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
 
-            .vpc_event-time {
-              @include text-center;
-              padding: 0 0.4rem;
-            }
-
-            .vpc_event-description {
-              @include text-center;
-              font-weight: 500;
+          &:not(.toBeContinued) {
+            .vpc_event-end-time {
+              display: block;
             }
           }
+
+          .vpc_event-start-date {
+            display: block;
+          }
+        }
+
+        &.toBeContinued {
+          border-left-style: none;
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+
+          &:not(.continued) {
+            .vpc_event-start-time {
+              display: block;
+            }
+          }
+
+          .vpc_event-end-date {
+            display: block;
+          }
+        }
+
+        &.continued::before,
+        &.toBeContinued::after {
+          content: " \21e0 ";
+          padding: 0 0.1rem;
+        }
+
+        &:not(.continued):not(.toBeContinued){
+          .vpc_event-start-time,
+          .vpc_event-end-time{
+            display: block;
+          }
+        }
+
+        &.oneDay {
+          background-color: unset !important;
+          color: #262626 !important;
+
+          .vpc_event-description{
+            justify-content: inherit;
+            margin-right: 0;
+          }
+
+          .vpc_event-ball {
+            width: 10px;
+            height: 10px;
+            margin: 0 0.1rem;
+            border-radius: 999px;
+          }
+
+          .vpc_event-end-time{
+            display: none !important;
+          }
+        }
+
+        .vpc_event-description {
+          text-overflow: ellipsis;
+          overflow: hidden;
+          margin: 0 auto;
+        }
+
+        .vpc_event-start-time,
+        .vpc_event-end-time,
+        .vpc_event-start-date,
+        .vpc_event-end-date {
+          margin: 0 0.2rem;
+          display: none;
+        }
+
+
+        /* Event Times */
+
+        & .startTime,
+        & .endTime {
+          font-weight: bold;
+          color: #666;
         }
       }
 
