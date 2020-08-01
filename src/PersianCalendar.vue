@@ -32,7 +32,7 @@
             </div>
             <!--WEEKS ROW-->
             <div
-                v-for="week in weeks"
+                v-for="week in periodWeeks"
                 :key="week.uid"
                 class="vpc_week"
             >
@@ -78,6 +78,39 @@
 <script>
 export default {
   name: 'PersianCalendar',
+  props:{
+    displayPeriod: {
+      type: String,
+      default () {
+        return 'week'
+      }
+    },
+    events: {
+      type: Array,
+      required: false,
+      default () {
+        return []
+      }
+    },
+    hideEventTimes: {
+      type: Boolean,
+      default () {
+        return false
+      }
+    },
+    disablePast: {
+      type: Boolean,
+      default () {
+        return false
+      }
+    },
+    disableFuture: {
+      type: Boolean,
+      default () {
+        return false
+      }
+    }
+  },
   data () {
     return {
       currentDate: null,
@@ -103,7 +136,7 @@ export default {
         this.currentDate = value
       }
     },
-    days () {
+    daysInMonth () {
       // Generating all days in current month
       const days = []
       let currentDay = this.$moment(`${this.year}-${this.month}-1`, 'jYYYY-jM-jD').locale('fa')
@@ -131,11 +164,22 @@ export default {
       }
       return days
     },
-    weeks () {
+    daysInWeek () {
+      const days = []
+      const showDay = this.$moment().locale('fa')
+      let day = showDay.startOf('jWeek')
+      console.log(day.format())
+      do {
+        day = this.$moment(day).add(1, 'days')
+        days.push(day)
+      } while (!day.isSame(this.$moment(showDay).add(7, 'days')))
+      return days
+    },
+    weeksInMonth () {
       const weeks = []
       let week = []
-      for (let i = 0; i < this.days.length; i++) {
-        week.push(this.days[i])
+      for (let i = 0; i < this.daysInMonth.length; i++) {
+        week.push(this.daysInMonth[i])
         if (week.length === 7) {
           weeks.push(week)
           week = []
@@ -143,17 +187,8 @@ export default {
       }
       return weeks
     },
-    events () {
-      return [
-        {id:1, startDateTime:this.$moment('1399/05/07', 'jYYYY/jMM/jDD'), endDateTime:this.$moment('1399/05/09', 'jYYYY/jMM/jDD'), description:'7-9', color:'#2a79b8', classes: []},
-        {id:2, startDateTime:this.$moment('1399/05/08', 'jYYYY/jMM/jDD'), endDateTime:this.$moment('1399/05/08', 'jYYYY/jMM/jDD'), description:'8-8', color:'#a71749', classes: []},
-        {id:21, startDateTime:this.$moment('1399/05/08', 'jYYYY/jMM/jDD'), endDateTime:this.$moment('1399/05/08', 'jYYYY/jMM/jDD'), description:'8-8', color:'#a71749', classes: []},
-        {id:22, startDateTime:this.$moment('1399/05/08', 'jYYYY/jMM/jDD'), endDateTime:this.$moment('1399/05/08', 'jYYYY/jMM/jDD'), description:'8-8', color:'#a71749', classes: []},
-        {id:4, startDateTime:this.$moment('1399/05/09', 'jYYYY/jMM/jDD'), endDateTime:this.$moment('1399/05/13', 'jYYYY/jMM/jDD'), description:'9-13', color:'#34147e', classes: []},
-        {id:5, startDateTime:this.$moment('1399/05/06', 'jYYYY/jMM/jDD'), endDateTime:this.$moment('1399/05/08', 'jYYYY/jMM/jDD'), description:'asd', color:'#34147e', classes: []},
-        {id:6, startDateTime:this.$moment('1399/05/01', 'jYYYY/jMM/jDD'), endDateTime:this.$moment('1399/05/20', 'jYYYY/jMM/jDD'), description:'1-20', color:'#34147e', classes: []},
-        {id:3, startDateTime:this.$moment('1399/05/10', 'jYYYY/jMM/jDD'), endDateTime:this.$moment('1399/05/25', 'jYYYY/jMM/jDD'), description:'sd', color:'#cb09cb', classes: []}
-      ]
+    periodWeeks () {
+      return this.displayPeriod === 'month' ? this.weeksInMonth : [this.daysInWeek]
     }
   },
   watch: {
