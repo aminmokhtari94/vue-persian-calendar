@@ -36,18 +36,18 @@
                 :key="week.uid"
                 class="vpc_week"
             >
-                <template v-for="i in getWeekItems(week[0].startOf('jWeek'))">
+                <template v-for="i in getWeekEvents(week[0].startOf('jWeek'))">
                     <slot
                             :value="i"
                             :weekStartDate="$moment(week).startOf('jWeek')"
-                            :top="getItemTop(i)"
-                            name="item"
+                            :top="getEventTop(i)"
+                            name="event"
                     >
                         <div
                                 :key="i.id"
                                 :class="i.classes"
                                 :title="i.title"
-                                :style="`top:${getItemTop(i)};background-color:${i.color};`"
+                                :style="`top:${getEventTop(i)};background-color:${i.color};`"
                                 class="vpc_event"
                         >
                             <div :style="{'background-color':i.color}" class="vpc_event-ball"></div>
@@ -147,9 +147,11 @@ export default {
       return [
         {id:1, startDateTime:this.$moment('1399/05/07', 'jYYYY/jMM/jDD'), endDateTime:this.$moment('1399/05/09', 'jYYYY/jMM/jDD'), description:'7-9', color:'#2a79b8', classes: []},
         {id:2, startDateTime:this.$moment('1399/05/08', 'jYYYY/jMM/jDD'), endDateTime:this.$moment('1399/05/08', 'jYYYY/jMM/jDD'), description:'8-8', color:'#a71749', classes: []},
+        {id:21, startDateTime:this.$moment('1399/05/08', 'jYYYY/jMM/jDD'), endDateTime:this.$moment('1399/05/08', 'jYYYY/jMM/jDD'), description:'8-8', color:'#a71749', classes: []},
+        {id:22, startDateTime:this.$moment('1399/05/08', 'jYYYY/jMM/jDD'), endDateTime:this.$moment('1399/05/08', 'jYYYY/jMM/jDD'), description:'8-8', color:'#a71749', classes: []},
         {id:4, startDateTime:this.$moment('1399/05/09', 'jYYYY/jMM/jDD'), endDateTime:this.$moment('1399/05/13', 'jYYYY/jMM/jDD'), description:'9-13', color:'#34147e', classes: []},
         {id:5, startDateTime:this.$moment('1399/05/06', 'jYYYY/jMM/jDD'), endDateTime:this.$moment('1399/05/08', 'jYYYY/jMM/jDD'), description:'asd', color:'#34147e', classes: []},
-        // {id:6, startDateTime:this.$moment('1399/05/01', 'jYYYY/jMM/jDD'), endDateTime:this.$moment('1399/05/20', 'jYYYY/jMM/jDD'), description:'1-20', color:'#34147e', classes: []},
+        {id:6, startDateTime:this.$moment('1399/05/01', 'jYYYY/jMM/jDD'), endDateTime:this.$moment('1399/05/20', 'jYYYY/jMM/jDD'), description:'1-20', color:'#34147e', classes: []},
         {id:3, startDateTime:this.$moment('1399/05/10', 'jYYYY/jMM/jDD'), endDateTime:this.$moment('1399/05/25', 'jYYYY/jMM/jDD'), description:'sd', color:'#cb09cb', classes: []}
       ]
     }
@@ -162,7 +164,7 @@ export default {
   created () {
     this.currentDate = this.$moment()
     // console.log(this.$moment().startOf('jWeek').locale('fa').format('YYYY-M-D HH:mm:ss'))
-    // this.getWeekItems(this.$moment().startOf('jWeek'))
+    // this.getWeekEvents(this.$moment().startOf('jWeek'))
   },
   methods:{
     addMonth () {
@@ -198,55 +200,55 @@ export default {
       this.currentDateChange = true
     },
 
-    itemComparer (a, b) {
+    eventComparer (a, b) {
       if (a.startDateTime.isBefore(b.startDateTime)) return -1
       if (b.startDateTime.isBefore(a.startDateTime)) return 1
       if (a.endDateTime.isAfter(b.endDateTime)) return -1
       if (b.endDateTime.isAfter(a.endDateTime)) return 1
       return a.id < b.id ? -1 : 1
     },
-    findAndSortItemsInWeek (weekStart) {
-      // Return a list of items that INCLUDE any portion of a given week.
-      return this.findAndSortItemsInDateRange(
+    findAndSortEventsInWeek (weekStart) {
+      // Return a list of events that INCLUDE any portion of a given week.
+      return this.findAndSortEventsInDateRange(
         weekStart, this.$moment(weekStart).hours(23).minutes(59).seconds(59).add(6, 'days')
       )
     },
-    findAndSortItemsInDateRange (startDateTime, endDateTime) {
-      // Return a list of items that INCLUDE any day within the date range,
-      // inclusive, sorted so items that start earlier are returned first.
+    findAndSortEventsInDateRange (startDateTime, endDateTime) {
+      // Return a list of events that INCLUDE any day within the date range,
+      // inclusive, sorted so events that start earlier are returned first.
       return this.events
         .filter(
-          // (item) => item.endDateTime >= startDateTime && this.dateOnly(item.startDateTime) <= endDateTime,
-          (item) => item.endDateTime.isSameOrAfter(startDateTime) && item.startDateTime.isSameOrBefore(endDateTime),
+          // (event) => event.endDateTime >= startDateTime && this.dateOnly(event.startDateTime) <= endDateTime,
+          (event) => event.endDateTime.isSameOrAfter(startDateTime) && event.startDateTime.isSameOrBefore(endDateTime),
           this
         )
-        .sort(this.itemComparer)
+        .sort(this.eventComparer)
     },
-    dayHasItems (day) {
+    dayHasEvents (day) {
       return this.events.find(
         (d) => d.endDateTime.isSameOrAfter(day) && d.startDateTime.isSameOrBefore(day)
       )
     },
-    dayItems (day) {
+    dayEvents (day) {
       return this.events.filter(
         (d) => d.endDateTime.isSameOrAfter(day) && d.startDateTime.isSameOrBefore(day)
       )
-        .sort(this.itemComparer)
+        .sort(this.eventComparer)
     },
     dayIsSelected (day) {
       if (!this.selectionStart || day < this.selectionStart) return false
       return !(!this.selectionEnd || day > this.selectionEnd)
     },
-    getWeekItems (weekStart) {
-      // Return a list of items that CONTAIN the week starting on a day.
-      // Sorted so the items that start earlier are always shown first.
-      const items = this.findAndSortItemsInWeek(weekStart.startOf('day'))
+    getWeekEvents (weekStart) {
+      // Return a list of events that CONTAIN the week starting on a day.
+      // Sorted so the events that start earlier are always shown first.
+      const events = this.findAndSortEventsInWeek(weekStart.startOf('day'))
       const results = []
-      const itemRows = [[], [], [], [], [], [], []]
-      for (let i = 0; i < items.length; i++) {
-        const ep = Object.assign({}, items[i], {
-          classes: [...items[i].classes],
-          itemRow: 0
+      const eventRows = [[], [], [], [], [], [], []]
+      for (let i = 0; i < events.length; i++) {
+        const ep = Object.assign({}, events[i], {
+          classes: [...events[i].classes],
+          eventRow: 0
         })
         const continued = ep.startDateTime.isBefore(weekStart)
         const startOffset = continued ? 0 : ep.startDateTime.diff(weekStart, 'days')
@@ -262,11 +264,11 @@ export default {
         for (let d = 0; d < 7; d++) {
           if (d === startOffset) {
             let s = 0
-            while (itemRows[d][s]) s++
-            ep.itemRow = s
-            itemRows[d][s] = true
+            while (eventRows[d][s]) s++
+            ep.eventRow = s
+            eventRows[d][s] = true
           } else if (d < startOffset + span) {
-            itemRows[d][ep.itemRow] = true
+            eventRows[d][ep.eventRow] = true
           }
         }
         ep.classes.push(`offset${startOffset}`)
@@ -276,9 +278,9 @@ export default {
       console.log(results)
       return results
     },
-    getItemTop (e) {
-      // Compute the top position of the item based on its assigned row within the given week.
-      const r = e.itemRow
+    getEventTop (e) {
+      // Compute the top position of the event based on its assigned row within the given week.
+      const r = e.eventRow
       const h = '20px'
       const b = '2px'
       return `calc( 35px + ${r}*${h} + ${r}*${b})`

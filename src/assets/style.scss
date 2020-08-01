@@ -223,7 +223,7 @@ $calendar_border: 1px solid $border_color;
 
       .vpc_day {
         @include calendar-cell;
-        height: 120px;
+        min-height: 120px;
         cursor: default;
 
         &.vpc_past {
@@ -320,6 +320,12 @@ $calendar_border: 1px solid $border_color;
             }
           }
 
+          &.span1{
+            .vpc_event-start-date {
+              display: none;
+            }
+          }
+
           .vpc_event-start-date {
             display: block;
           }
@@ -336,6 +342,12 @@ $calendar_border: 1px solid $border_color;
             }
           }
 
+          &.span1{
+            .vpc_event-end-date {
+              display: none;
+            }
+          }
+
           .vpc_event-end-date {
             display: block;
           }
@@ -347,9 +359,9 @@ $calendar_border: 1px solid $border_color;
           padding: 0 0.1rem;
         }
 
-        &:not(.continued):not(.toBeContinued){
+        &:not(.continued):not(.toBeContinued) {
           .vpc_event-start-time,
-          .vpc_event-end-time{
+          .vpc_event-end-time {
             display: block;
           }
         }
@@ -358,7 +370,7 @@ $calendar_border: 1px solid $border_color;
           background-color: unset !important;
           color: #262626 !important;
 
-          .vpc_event-description{
+          .vpc_event-description {
             justify-content: inherit;
             margin-right: 0;
           }
@@ -370,7 +382,7 @@ $calendar_border: 1px solid $border_color;
             border-radius: 999px;
           }
 
-          .vpc_event-end-time{
+          .vpc_event-end-time {
             display: none !important;
           }
         }
@@ -402,14 +414,6 @@ $calendar_border: 1px solid $border_color;
       &:last-child {
         .vpc_day {
           border-bottom: $calendar_border;
-
-          &:first-child {
-            border-bottom-right-radius: 15px;
-          }
-
-          &:last-child {
-            border-bottom-left-radius: 15px;
-          }
         }
       }
     }
