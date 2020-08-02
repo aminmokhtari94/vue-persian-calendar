@@ -3,15 +3,21 @@
       <!--CALENDAR HEADER-->
       <div id="vpc_header" slot="header">
         <div id="vpc_date-control">
-          <div class="vpc_control-btn" @click="subtractMonth">
+          <div class="vpc_control-btn" @click="subtractPeriod">
             <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </div>
-          <span class="vpc_now-date">{{currentDate.locale('fa').format('jMMMM jYYYY')}}</span>
-          <div class="vpc_control-btn" @click="addMonth">
+          <span class="vpc_now-date">
+              {{ isWeekPeriod ? `${currentDate.locale('fa').format('DD')} - ${$moment(currentDate).add(6,'days').locale('fa').format('DD')} `: '' }}
+              {{currentDate.locale('fa').format('jMMMM jYYYY')}}
+          </span>
+          <div class="vpc_control-btn" @click="addPeriod">
             <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
           </div>
-          <div class="vpc_today-btn" @click="goToday">امروز</div>
+          <div v-if="!disableToday" class="vpc_today-btn" @click="goToday">امروز</div>
         </div>
+          <div v-if="!disablePeriod" class="vpc_period-control">
+              <div class="vpc_period-btn" @click="togglePeriod">{{displayPeriodText}}</div>
+          </div>
       </div>
       <!--CALENDAR GRID-->
       <transition
@@ -34,7 +40,7 @@
             <div
                 v-for="week in periodWeeks"
                 :key="week.uid"
-                class="vpc_week"
+                :class="weekClassObject"
             >
                 <template v-for="i in getWeekEvents(week[0].startOf('jWeek'))">
                     <slot
@@ -51,11 +57,12 @@
                                 class="vpc_event"
                         >
                             <div :style="{'background-color':i.color}" class="vpc_event-ball"></div>
-                            <span class="vpc_event-start-time">{{ i.startDateTime.format('HH:mm').toPersianDigits() }}</span>
-                            <span class="vpc_event-start-date">{{ i.startDateTime.format('jMM/jDD').toPersianDigits() }}</span>
+                            <span class="vpc_event-start-time" v-if="!hideEventTimes">{{ i.startDateTime.format('HH:mm').toPersianDigits() }}<span> - {{ i.startDateTime.format('HH:mm').toPersianDigits() }} </span>
+                            </span>
+                            <span class="vpc_event-start-date" v-if="!hideEventTimes">{{ i.startDateTime.format('jMM/jDD').toPersianDigits() }}</span>
                             <span class="vpc_event-description">{{ i.description }}</span>
-                            <span class="vpc_event-end-time">{{ i.endDateTime.format('HH:mm').toPersianDigits() }}</span>
-                            <span class="vpc_event-end-date">{{ i.endDateTime.format('jMM/jDD').toPersianDigits() }}</span>
+                            <span class="vpc_event-end-time" v-if="!hideEventTimes">{{ i.endDateTime.format('HH:mm').toPersianDigits() }}</span>
+                            <span class="vpc_event-end-date" v-if="!hideEventTimes">{{ i.endDateTime.format('jMM/jDD').toPersianDigits() }}</span>
                         </div>
                     </slot>
                 </template>
@@ -78,33 +85,23 @@
 <script>
 export default {
   name: 'PersianCalendar',
-  props:{
-    displayPeriod: {
-      type: String,
-      default () {
-        return 'week'
-      }
-    },
-    events: {
-      type: Array,
-      required: false,
-      default () {
-        return []
-      }
-    },
+  props: {
+    showDate: Object,
+    displayPeriod: String,
+    eventList: Array,
     hideEventTimes: {
       type: Boolean,
       default () {
         return false
       }
     },
-    disablePast: {
+    disableToday: {
       type: Boolean,
       default () {
         return false
       }
     },
-    disableFuture: {
+    disablePeriod: {
       type: Boolean,
       default () {
         return false
@@ -113,10 +110,12 @@ export default {
   },
   data () {
     return {
-      currentDate: null,
+      currentDate: this.$moment(),
       currentDateChange: true,
       transitionAction: 'slide-right',
-      addEventModalShow: false
+      addEventModalShow: false,
+      period: 'month',
+      events: []
     }
   },
   computed:{
@@ -166,12 +165,11 @@ export default {
     },
     daysInWeek () {
       const days = []
-      const showDay = this.$moment().locale('fa')
+      const showDay = this.currentDate.locale('fa')
       let day = showDay.startOf('jWeek')
-      console.log(day.format())
       do {
-        day = this.$moment(day).add(1, 'days')
         days.push(day)
+        day = this.$moment(day).add(1, 'days')
       } while (!day.isSame(this.$moment(showDay).add(7, 'days')))
       return days
     },
@@ -187,37 +185,66 @@ export default {
       }
       return weeks
     },
+    isWeekPeriod () {
+      return this.period === 'week'
+    },
     periodWeeks () {
-      return this.displayPeriod === 'month' ? this.weeksInMonth : [this.daysInWeek]
+      return this.isWeekPeriod ? [this.daysInWeek] : this.weeksInMonth
+    },
+    displayPeriodText () {
+      return this.isWeekPeriod ? 'ماه' : 'هفته'
+    },
+    weekClassObject () {
+      return {
+        'vpc_week': true,
+        'vpc_week-period': this.isWeekPeriod
+      }
     }
   },
   watch: {
     currentDate () {
+      // update transition
       this.currentDateChange = false
+    },
+    showDate (value) {
+      this.currentDate = value
+    },
+    displayPeriod (value) {
+      this.period = value
+    },
+    eventList (value) {
+      this.events = value
     }
   },
   created () {
-    this.currentDate = this.$moment()
-    // console.log(this.$moment().startOf('jWeek').locale('fa').format('YYYY-M-D HH:mm:ss'))
-    // this.getWeekEvents(this.$moment().startOf('jWeek'))
+    this.currentDate = this.showDate
+    this.period = this.displayPeriod
+    this.events = this.eventList
   },
   methods:{
-    addMonth () {
+    addPeriod () {
       this.transitionAction = 'slide-left'
-      this.currentDate = this.$moment(this.currentDate).add(1, 'month')
+      this.currentDate = this.$moment(this.currentDate).add(1, this.isWeekPeriod ? 'weeks' : 'months')
     },
-    subtractMonth () {
+    subtractPeriod () {
       this.transitionAction = 'slide-right'
-      this.currentDate = this.$moment(this.currentDate).subtract(1, 'month')
+      this.currentDate = this.$moment(this.currentDate).subtract(1, this.isWeekPeriod ? 'weeks' : 'months')
     },
     goToday () {
-      if (this.currentDate.isBefore(this.$moment(), 'month')) {
+      if (this.currentDate.isBefore(this.$moment(), 'month') || (this.isWeekPeriod && this.currentDate.isBefore(this.$moment().startOf('jWeek')))) {
         this.transitionAction = 'slide-left'
         this.currentDate = this.$moment()
-      } else if (this.currentDate.isAfter(this.$moment(), 'month')) {
+      } else if (this.currentDate.isAfter(this.$moment(), 'month') || (this.isWeekPeriod && this.currentDate.isAfter(this.$moment(), 'week'))) {
         this.transitionAction = 'slide-right'
         this.currentDate = this.$moment()
       }
+    },
+    togglePeriod () {
+      this.period = this.isWeekPeriod ? 'month' : 'week'
+      this.$emit('update:displayPeriod', this.period)
+
+      // update transition
+      this.currentDateChange = false
     },
     dayClassObject (day) {
       // const eventFormDate = this.$store.state.eventFormDate
@@ -227,14 +254,14 @@ export default {
         'vpc_day': true,
         'vpc_today': today,
         'vpc_past': day.isSameOrBefore(this.$moment(), 'day') && !today,
-        'vpc_not-current-month': !day.isSame(this.currentDate, 'month')
+        'vpc_not-current-month': !day.isSame(this.currentDate, 'month') && !this.isWeekPeriod,
+        'vpc_week-period-day': this.isWeekPeriod
       }
     },
-    // Transition show month after fade out
     afterLeave () {
+      // Transition show month after fade out
       this.currentDateChange = true
     },
-
     eventComparer (a, b) {
       if (a.startDateTime.isBefore(b.startDateTime)) return -1
       if (b.startDateTime.isBefore(a.startDateTime)) return 1
@@ -310,13 +337,12 @@ export default {
         ep.classes.push(`span${span}`)
         results.push(ep)
       }
-      console.log(results)
       return results
     },
     getEventTop (e) {
       // Compute the top position of the event based on its assigned row within the given week.
       const r = e.eventRow
-      const h = '20px'
+      const h = this.isWeekPeriod ? '40px' : '20px'
       const b = '2px'
       return `calc( 35px + ${r}*${h} + ${r}*${b})`
     }

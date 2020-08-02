@@ -1,6 +1,6 @@
 {
   "name": "vue-persian-calendar",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "private": false,
   "main": "dist/persian-calendar.umd.js",
   "browser": {
@@ -53,10 +53,10 @@
     "core-js": "^3.6.5",
     "eslint": "^6.7.0",
     "eslint-plugin-vue": "^6.2.2",
+    "sass": "^1.26.10",
     "sass-loader": "^9.0.2",
     "vue": "^2.6.11",
-    "vue-template-compiler": "^2.6.11",
-    "sass": "^1.26.10"
+    "vue-template-compiler": "^2.6.11"
   },
   "browserslist": [
     "> 1%",

@@ -150,6 +150,7 @@ $calendar_border: 1px solid $border_color;
 
   #vpc_header {
     padding: 20px 15px;
+    display: flex;
 
     #vpc_date-control {
       display: flex;
@@ -172,6 +173,23 @@ $calendar_border: 1px solid $border_color;
       }
 
       .vpc_today-btn {
+        @include text-center;
+        margin: 0 10px;
+        height: 1.3rem;
+        line-height: 1rem;
+        vertical-align: middle;
+        padding: 0.2rem 1.2rem;
+        border-radius: 15px !important;
+        cursor: pointer !important;
+        background-color: $primary_color !important;
+        color: #fff !important;
+      }
+    }
+
+    .vpc_period-control {
+      margin-right: auto;
+
+      .vpc_period-btn {
         @include text-center;
         margin: 0 10px;
         height: 1.3rem;
@@ -242,6 +260,16 @@ $calendar_border: 1px solid $border_color;
           }
         }
 
+        &.vpc_week-period-day {
+          min-height: 600px;
+
+          .vpc_day-number {
+            font-size: 1.4rem;
+            text-align: center;
+            width: auto !important;
+          }
+        }
+
         &.vpc_today {
           .vpc_day-number {
             @include text-center;
@@ -299,16 +327,6 @@ $calendar_border: 1px solid $border_color;
           filter: brightness(95%);
         }
 
-        //&.span4, &.span5, &.span6, &.span7,{
-        //  .vpc_event-start-time,
-        //  .vpc_event-end-time,
-        //  .vpc_event-start-date,
-        //  .vpc_event-end-date {
-        //    display: block;
-        //  }
-        //}
-
-
         &.continued {
           border-right-style: none;
           border-top-right-radius: 0;
@@ -320,7 +338,7 @@ $calendar_border: 1px solid $border_color;
             }
           }
 
-          &.span1{
+          &.span1 {
             .vpc_event-start-date {
               display: none;
             }
@@ -342,7 +360,7 @@ $calendar_border: 1px solid $border_color;
             }
           }
 
-          &.span1{
+          &.span1 {
             .vpc_event-end-date {
               display: none;
             }
@@ -373,6 +391,7 @@ $calendar_border: 1px solid $border_color;
           .vpc_event-description {
             justify-content: inherit;
             margin-right: 0;
+            width: 100%;
           }
 
           .vpc_event-ball {
@@ -394,6 +413,7 @@ $calendar_border: 1px solid $border_color;
         }
 
         .vpc_event-start-time,
+        .vpc_event-start-time span,
         .vpc_event-end-time,
         .vpc_event-start-date,
         .vpc_event-end-date {
@@ -408,6 +428,29 @@ $calendar_border: 1px solid $border_color;
         & .endTime {
           font-weight: bold;
           color: #666;
+        }
+      }
+
+      &.vpc_week-period {
+        .vpc_event {
+          height: 1.4rem;
+
+          &.oneDay {
+            display: block;
+            height: 40px;
+            line-height: 1rem;
+
+            .vpc_event-ball {
+              position: absolute;
+              top: 0.1rem;
+            }
+            .vpc_event-start-time span {
+              display: contents;
+            }
+            .vpc_event-description {
+              margin: 0 0.8rem;
+            }
+          }
         }
       }
 
