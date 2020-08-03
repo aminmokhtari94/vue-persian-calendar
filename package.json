@@ -1,6 +1,6 @@
 {
   "name": "vue-persian-calendar",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "private": false,
   "main": "dist/persian-calendar.umd.js",
   "browser": {
@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/aminmokhtari94/vue-persian-calendar.git"
   },
-  "description": "WIP: Vue Persian Calendar",
+  "description": "A Persian Calendar with Events viewer for Vue.js",
   "bugs": {
     "url": "https://github.com/aminmokhtari94/vue-persian-calendar/issues"
   },
