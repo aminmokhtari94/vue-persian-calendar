@@ -88,7 +88,12 @@
 export default {
   name: 'PersianCalendar',
   props: {
-    showDate: Object,
+    showDate: {
+      type:Object,
+      default () {
+        return this.$moment()
+      }
+    },
     displayPeriod: String,
     eventsList: {
       type: Array,
@@ -131,7 +136,7 @@ export default {
   },
   data () {
     return {
-      currentDate: this.$moment(),
+      currentDate: null,
       currentDateChange: true,
       transitionAction: 'slide-right',
       addEventModalShow: false,
