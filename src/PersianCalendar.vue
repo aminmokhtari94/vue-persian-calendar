@@ -13,7 +13,7 @@
           <span v-else class="vpc_now-date">{{currentDate.locale('fa').format('jMMMM jYYYY').toPersianDigits()}}</span>
 
           <div class="vpc_control-btn" @click="addPeriod" :disabled="isAfterMax()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
           </div>
           <div v-if="!disableToday" class="vpc_today-btn" @click="goToday">امروز</div>
         </div>
