@@ -3,14 +3,14 @@
       <!--CALENDAR HEADER-->
       <div id="vpc_header" slot="header">
         <div id="vpc_date-control">
-          <div class="vpc_control-btn" @click="subtractPeriod">
+          <div class="vpc_control-btn" @click="subtractPeriod" :disabled="isBeforeMin()">
             <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </div>
           <span class="vpc_now-date">
               {{ isWeekPeriod ? `${currentDate.locale('fa').format('DD')} - ${$moment(currentDate).add(6,'days').locale('fa').format('DD')} `: '' }}
               {{currentDate.locale('fa').format('jMMMM jYYYY')}}
           </span>
-          <div class="vpc_control-btn" @click="addPeriod">
+          <div class="vpc_control-btn" @click="addPeriod" :disabled="isAfterMax()">
             <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
           </div>
           <div v-if="!disableToday" class="vpc_today-btn" @click="goToday">امروز</div>
@@ -89,6 +89,8 @@ export default {
     showDate: Object,
     displayPeriod: String,
     eventList: Array,
+    min: Object,
+    max: Object,
     hideEventTimes: {
       type: Boolean,
       default () {
@@ -222,11 +224,23 @@ export default {
     this.events = this.eventList
   },
   methods:{
+    isAfterMax () {
+      const newDate = this.$moment(this.currentDate).add(1, this.isWeekPeriod ? 'weeks' : 'months')
+      const periodStart = newDate.startOf(this.isWeekPeriod ? 'jWeek' : 'jMonth')
+      return this.max.get('year') && periodStart.isAfter(this.max)
+    },
+    isBeforeMin () {
+      const newDate = this.$moment(this.currentDate).subtract(1, this.isWeekPeriod ? 'weeks' : 'months')
+      const periodEnd = this.min.startOf(this.isWeekPeriod ? 'jWeek' : 'jMonth')
+      return this.min.get('year') && periodEnd.isAfter(newDate)
+    },
     addPeriod () {
+      if (this.isAfterMax()) return
       this.transitionAction = 'slide-left'
       this.currentDate = this.$moment(this.currentDate).add(1, this.isWeekPeriod ? 'weeks' : 'months')
     },
     subtractPeriod () {
+      if (this.isBeforeMin()) return
       this.transitionAction = 'slide-right'
       this.currentDate = this.$moment(this.currentDate).subtract(1, this.isWeekPeriod ? 'weeks' : 'months')
     },
@@ -247,8 +261,6 @@ export default {
       this.currentDateChange = false
     },
     dayClassObject (day) {
-      // const eventFormDate = this.$store.state.eventFormDate
-      // const eventFormActive = this.$store.state.eventFormActive
       const today = day.isSame(this.$moment(), 'day')
       return {
         'vpc_day': true,

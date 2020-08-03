@@ -147,6 +147,7 @@ $calendar_border: 1px solid $border_color;
   font-family: 'Vazir', sans-serif;
   font-size: 1rem;
   direction: rtl;
+  user-select: none;
 
   #vpc_header {
     padding: 20px 15px;
@@ -165,6 +166,11 @@ $calendar_border: 1px solid $border_color;
         cursor: pointer !important;
         background-color: $primary_color !important;
         color: #fff !important;
+
+        &[disabled] {
+          background-color: #ccc !important;
+          cursor: not-allowed !important;
+        }
       }
 
       .vpc_now-date {

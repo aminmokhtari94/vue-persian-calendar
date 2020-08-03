@@ -1,16 +1,12 @@
 <template>
     <div>
         <div id="app">
-            <input type="text" v-model="dp"/>
-            {{dp}}
             <persian-calendar
                     :event-list="events"
                     :show-date="$moment().add(1,'months')"
                     :display-period.sync="dp"
-                    disable-control
-                    disable-period
-                    disable-today
-                    hide-event-times
+                    :max="$moment('1399/06/08', 'jYYYY/jMM/jDD')"
+                    :min="$moment('1399/04/04', 'jYYYY/jMM/jDD')"
             > </persian-calendar>
         </div>
     </div>
