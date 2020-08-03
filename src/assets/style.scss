@@ -288,6 +288,14 @@ $calendar_border: 1px solid $border_color;
           }
         }
 
+        &.vpc_day-disable {
+          background-color: $not_current_month_background !important;
+
+          .vpc_day-number {
+            @include shadow-text;
+          }
+        }
+
         .vpc_day-number {
           font-weight: bold;
           line-height: 1.2rem;

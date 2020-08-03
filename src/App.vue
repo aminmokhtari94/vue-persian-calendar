@@ -3,10 +3,8 @@
         <div id="app">
             <persian-calendar
                     :event-list="events"
-                    :show-date="$moment().add(1,'months')"
+                    :show-date="$moment('1399/05/26', 'jYYYY/jMM/jDD')"
                     :display-period.sync="dp"
-                    :max="$moment('1399/06/08', 'jYYYY/jMM/jDD')"
-                    :min="$moment('1399/04/04', 'jYYYY/jMM/jDD')"
             > </persian-calendar>
         </div>
     </div>

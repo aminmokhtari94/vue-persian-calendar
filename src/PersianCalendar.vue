@@ -6,10 +6,12 @@
           <div class="vpc_control-btn" @click="subtractPeriod" :disabled="isBeforeMin()">
             <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </div>
-          <span class="vpc_now-date">
-              {{ isWeekPeriod ? `${currentDate.locale('fa').format('DD')} - ${$moment(currentDate).add(6,'days').locale('fa').format('DD')} `: '' }}
-              {{currentDate.locale('fa').format('jMMMM jYYYY')}}
+
+          <span v-if="isWeekPeriod" class="vpc_now-date">
+              {{displayRangeText.toPersianDigits()}}
           </span>
+          <span v-else class="vpc_now-date">{{currentDate.locale('fa').format('jMMMM jYYYY').toPersianDigits()}}</span>
+
           <div class="vpc_control-btn" @click="addPeriod" :disabled="isAfterMax()">
             <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
           </div>
@@ -196,6 +198,16 @@ export default {
     displayPeriodText () {
       return this.isWeekPeriod ? 'ماه' : 'هفته'
     },
+    displayRangeText () {
+      const start = this.$moment(this.currentDate).startOf('jWeek')
+      const end = this.$moment(start).add(6, 'days')
+      let startformat = 'DD'
+
+      if (!start.isSame(end, 'month')) startformat = 'DD jMMMM'
+      if (!start.isSame(end, 'year')) startformat = 'DD jMMMM jYYYY'
+
+      return `${start.locale('fa').format(startformat)} - ${end.locale('fa').format('DD jMMMM jYYYY')}`
+    },
     weekClassObject () {
       return {
         'vpc_week': true,
@@ -225,14 +237,16 @@ export default {
   },
   methods:{
     isAfterMax () {
+      if (!this.max) return
       const newDate = this.$moment(this.currentDate).add(1, this.isWeekPeriod ? 'weeks' : 'months')
       const periodStart = newDate.startOf(this.isWeekPeriod ? 'jWeek' : 'jMonth')
-      return this.max.get('year') && periodStart.isAfter(this.max)
+      return this.max.isValid() && periodStart.isAfter(this.max)
     },
     isBeforeMin () {
+      if (!this.min) return
       const newDate = this.$moment(this.currentDate).subtract(1, this.isWeekPeriod ? 'weeks' : 'months')
-      const periodEnd = this.min.startOf(this.isWeekPeriod ? 'jWeek' : 'jMonth')
-      return this.min.get('year') && periodEnd.isAfter(newDate)
+      const periodEnd = this.$moment(this.min).startOf(this.isWeekPeriod ? 'jWeek' : 'jMonth')
+      return this.min.isValid() && periodEnd.isAfter(newDate)
     },
     addPeriod () {
       if (this.isAfterMax()) return
@@ -262,12 +276,22 @@ export default {
     },
     dayClassObject (day) {
       const today = day.isSame(this.$moment(), 'day')
+
+      let disable = false
+      if (this.min) {
+        disable = (this.min.isValid() && day.isBefore(this.min, 'day')) || disable
+      }
+      if (this.max) {
+        disable = (this.max.isValid() && day.isAfter(this.max, 'day')) || disable
+      }
+
       return {
         'vpc_day': true,
         'vpc_today': today,
         'vpc_past': day.isSameOrBefore(this.$moment(), 'day') && !today,
         'vpc_not-current-month': !day.isSame(this.currentDate, 'month') && !this.isWeekPeriod,
-        'vpc_week-period-day': this.isWeekPeriod
+        'vpc_week-period-day': this.isWeekPeriod,
+        'vpc_day-disable': disable
       }
     },
     afterLeave () {
