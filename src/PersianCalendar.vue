@@ -54,15 +54,15 @@
                         <div
                                 :key="i.id"
                                 :class="i.classes"
-                                :title="i.title"
                                 :style="`top:${getEventTop(i)};background-color:${i.color};`"
                                 class="vpc_event"
+                                @click="$emit('on-event-click', i)"
                         >
                             <div :style="{'background-color':i.color}" class="vpc_event-ball"></div>
-                            <span class="vpc_event-start-time" v-if="!hideEventTimes">{{ i.startDateTime.format('HH:mm').toPersianDigits() }}<span> - {{ i.startDateTime.format('HH:mm').toPersianDigits() }} </span>
+                            <span class="vpc_event-start-time" v-if="!hideEventTimes">{{ i.startDateTime.format('HH:mm').toPersianDigits() }}<span> - {{ i.endDateTime.format('HH:mm').toPersianDigits() }} </span>
                             </span>
                             <span class="vpc_event-start-date" v-if="!hideEventTimes">{{ i.startDateTime.format('jMM/jDD').toPersianDigits() }}</span>
-                            <span class="vpc_event-description">{{ i.description }}</span>
+                            <span class="vpc_event-title">{{ i.title }}</span>
                             <span class="vpc_event-end-time" v-if="!hideEventTimes">{{ i.endDateTime.format('HH:mm').toPersianDigits() }}</span>
                             <span class="vpc_event-end-date" v-if="!hideEventTimes">{{ i.endDateTime.format('jMM/jDD').toPersianDigits() }}</span>
                         </div>
@@ -90,7 +90,12 @@ export default {
   props: {
     showDate: Object,
     displayPeriod: String,
-    eventList: Array,
+    eventsList: {
+      type: Array,
+      default () {
+        return []
+      }
+    },
     min: Object,
     max: Object,
     hideEventTimes: {
@@ -238,14 +243,14 @@ export default {
     displayPeriod (value) {
       this.period = value
     },
-    eventList (value) {
+    eventsList (value) {
       this.events = value
     }
   },
   created () {
     this.currentDate = this.showDate
     this.period = this.displayPeriod
-    this.events = this.eventList
+    this.events = this.eventsList
   },
   methods:{
     isAfterMax () {
@@ -264,11 +269,13 @@ export default {
       if (this.isAfterMax()) return
       this.transitionAction = 'slide-left'
       this.currentDate = this.$moment(this.currentDate).add(1, this.isWeekPeriod ? 'weeks' : 'months')
+      this.$emit('on-page-add', this.currentDate)
     },
     subtractPeriod () {
       if (this.isBeforeMin()) return
       this.transitionAction = 'slide-right'
       this.currentDate = this.$moment(this.currentDate).subtract(1, this.isWeekPeriod ? 'weeks' : 'months')
+      this.$emit('on-page-subtract', this.currentDate)
     },
     goToday () {
       if (this.currentDate.isBefore(this.$moment(), 'month') || (this.isWeekPeriod && this.currentDate.isBefore(this.$moment().startOf('jWeek')))) {
@@ -282,6 +289,7 @@ export default {
     togglePeriod () {
       this.period = this.isWeekPeriod ? 'month' : 'week'
       this.$emit('update:displayPeriod', this.period)
+      this.$emit('on-display-period-change', this.period)
 
       // update transition
       this.currentDateChange = false

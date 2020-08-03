@@ -402,7 +402,7 @@ $calendar_border: 1px solid $border_color;
           background-color: unset !important;
           color: #262626 !important;
 
-          .vpc_event-description {
+          .vpc_event-title {
             justify-content: inherit;
             margin-right: 0;
             width: 100%;
@@ -420,7 +420,7 @@ $calendar_border: 1px solid $border_color;
           }
         }
 
-        .vpc_event-description {
+        .vpc_event-title {
           text-overflow: ellipsis;
           overflow: hidden;
           margin: 0 auto;
@@ -461,7 +461,7 @@ $calendar_border: 1px solid $border_color;
             .vpc_event-start-time span {
               display: contents;
             }
-            .vpc_event-description {
+            .vpc_event-title {
               margin: 0 0.8rem;
             }
           }
