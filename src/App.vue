@@ -5,6 +5,8 @@
                     :event-list="events"
                     :show-date="$moment('1399/05/26', 'jYYYY/jMM/jDD')"
                     :display-period.sync="dp"
+                    hide-month-shadow
+                    hide-past-days-shadow
             > </persian-calendar>
         </div>
     </div>

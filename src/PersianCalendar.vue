@@ -110,6 +110,18 @@ export default {
       default () {
         return false
       }
+    },
+    hideMonthShadow: {
+      type: Boolean,
+      default () {
+        return false
+      }
+    },
+    hidePastDaysShadow: {
+      type: Boolean,
+      default () {
+        return false
+      }
     }
   },
   data () {
@@ -287,9 +299,9 @@ export default {
 
       return {
         'vpc_day': true,
-        'vpc_today': today,
-        'vpc_past': day.isSameOrBefore(this.$moment(), 'day') && !today,
-        'vpc_not-current-month': !day.isSame(this.currentDate, 'month') && !this.isWeekPeriod,
+        'vpc_today': today && !this.disableToday,
+        'vpc_past': day.isSameOrBefore(this.$moment(), 'day') && !today && !this.hidePastDaysShadow,
+        'vpc_not-current-month': !day.isSame(this.currentDate, 'month') && !this.isWeekPeriod && !this.hideMonthShadow,
         'vpc_week-period-day': this.isWeekPeriod,
         'vpc_day-disable': disable
       }
