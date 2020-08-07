@@ -62,8 +62,8 @@ These events emitted on actions in the persian calendar:
 | name      | Type     | Description                                            |
 |------------|----------|--------------------------------------------------------|
 | id  | String\|Number   | A unique identifier for the event. This is required and must be unique. |
-| startDate  | [Jalali Moment Object](https://github.com/fingerpich/jalali-moment)  | The moment the event starts on the calendar. |
-| endDate  | [Jalali Moment Object](https://github.com/fingerpich/jalali-moment)  | The moment the event ends on the calendar. |
+| startDateTime  | [Jalali Moment Object](https://github.com/fingerpich/jalali-moment)  | The moment the event starts on the calendar. |
+| endDateTime  | [Jalali Moment Object](https://github.com/fingerpich/jalali-moment)  | The moment the event ends on the calendar. |
 | title  | String   | The name of the event shown on the calendar. |
 | classes  | String  | Any additional CSS classes you wish to assign to the event. |
 | color  | String  | CSS Color for event background |

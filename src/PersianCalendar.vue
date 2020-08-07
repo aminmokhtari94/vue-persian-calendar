@@ -370,7 +370,7 @@ export default {
       const eventRows = [[], [], [], [], [], [], []]
       for (let i = 0; i < events.length; i++) {
         const ep = Object.assign({}, events[i], {
-          classes: [...events[i].classes],
+          classes: events[i].classes ? [...events[i].classes] : [],
           eventRow: 0
         })
         const continued = ep.startDateTime.isBefore(weekStart)
