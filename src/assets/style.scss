@@ -54,7 +54,7 @@ $calendar_border: 1px solid $border_color;
 @mixin calendar-cell {
   width: 100%;
   overflow: hidden;
-  padding: 0.5rem;
+  padding: 0.5em;
   border-right: $calendar_border;
   border-top: $calendar_border;
   user-select: none;
@@ -74,7 +74,7 @@ $calendar_border: 1px solid $border_color;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 1rem;
+  height: 1em;
 }
 
 @font-face {
@@ -145,7 +145,7 @@ $calendar_border: 1px solid $border_color;
 
 #persian-calendar {
   font-family: 'Vazir', sans-serif;
-  font-size: 1rem;
+  font-size: 1em;
   direction: rtl;
   user-select: none;
 
@@ -156,12 +156,12 @@ $calendar_border: 1px solid $border_color;
     #vpc_date-control {
       display: flex;
       justify-content: flex-start;
-      font-size: 1rem;
+      font-size: 1em;
 
       .vpc_control-btn {
-        width: 1rem;
-        height: 1rem;
-        padding: 0.3rem;
+        width: 1em;
+        height: 1em;
+        padding: 0.3em;
         border-radius: 9999px !important;
         cursor: pointer !important;
         background-color: $primary_color !important;
@@ -174,17 +174,17 @@ $calendar_border: 1px solid $border_color;
       }
 
       .vpc_now-date {
-        margin: auto .75rem;
+        margin: auto .75em;
         white-space: nowrap;
       }
 
       .vpc_today-btn {
         @include text-center;
         margin: 0 10px;
-        height: 1.3rem;
-        line-height: 1rem;
+        height: 1.3em;
+        line-height: 1em;
         vertical-align: middle;
-        padding: 0.2rem 1.2rem;
+        padding: 0.2em 1.2em;
         border-radius: 15px !important;
         cursor: pointer !important;
         background-color: $primary_color !important;
@@ -198,10 +198,10 @@ $calendar_border: 1px solid $border_color;
       .vpc_period-btn {
         @include text-center;
         margin: 0 10px;
-        height: 1.3rem;
-        line-height: 1rem;
+        height: 1.3em;
+        line-height: 1em;
         vertical-align: middle;
-        padding: 0.2rem 1.2rem;
+        padding: 0.2em 1.2em;
         border-radius: 15px !important;
         cursor: pointer !important;
         background-color: $primary_color !important;
@@ -220,8 +220,8 @@ $calendar_border: 1px solid $border_color;
       div {
         @include calendar-cell;
         color: $days_header_color;
-        font-size: 0.9rem;
-        line-height: 0.6rem;
+        font-size: 0.9em;
+        line-height: 0.6em;
         text-align: center;
         cursor: default;
 
@@ -270,7 +270,7 @@ $calendar_border: 1px solid $border_color;
           min-height: 600px;
 
           .vpc_day-number {
-            font-size: 1.4rem;
+            font-size: 1.4em;
             text-align: center;
             width: auto !important;
           }
@@ -278,9 +278,9 @@ $calendar_border: 1px solid $border_color;
 
         &.vpc_today {
           .vpc_day-number {
-            line-height: 1.5rem;
-            width: 1.2rem;
-            height: 1.2rem;
+            line-height: 1.5em;
+            width: 1.2em;
+            height: 1.2em;
             border-radius: 9999px !important;
             background-color: $primary_color !important;
             color: #fff !important;
@@ -298,7 +298,7 @@ $calendar_border: 1px solid $border_color;
 
         .vpc_day-number {
           font-weight: bold;
-          line-height: 1.2rem;
+          line-height: 1.2em;
         }
 
         &:last-child {
@@ -309,10 +309,10 @@ $calendar_border: 1px solid $border_color;
       /* Events */
       .vpc_event {
         @include text-center;
-        font-size: 0.9rem;
-        padding-left: 0.78rem;
+        font-size: 0.9em;
+        padding-left: 0.78em;
         border-color: #e0e0f0;
-        border-radius: 0.5rem;
+        border-radius: 0.5em;
         text-overflow: ellipsis;
         position: absolute;
         white-space: nowrap;
@@ -388,7 +388,7 @@ $calendar_border: 1px solid $border_color;
         &.continued::before,
         &.toBeContinued::after {
           content: " \21e0 ";
-          padding: 0 0.1rem;
+          padding: 0 0.1em;
         }
 
         &:not(.continued):not(.toBeContinued) {
@@ -411,7 +411,7 @@ $calendar_border: 1px solid $border_color;
           .vpc_event-ball {
             width: 10px;
             height: 10px;
-            margin: 0 0.1rem;
+            margin: 0 0.1em;
             border-radius: 999px;
           }
 
@@ -431,7 +431,7 @@ $calendar_border: 1px solid $border_color;
         .vpc_event-end-time,
         .vpc_event-start-date,
         .vpc_event-end-date {
-          margin: 0 0.2rem;
+          margin: 0 0.2em;
           display: none;
         }
 
@@ -447,22 +447,22 @@ $calendar_border: 1px solid $border_color;
 
       &.vpc_week-period {
         .vpc_event {
-          height: 1.4rem;
+          height: 1.4em;
 
           &.oneDay {
             display: block;
-            height: 40px;
-            line-height: 1rem;
+            height: 2em;
+            line-height: 1em;
 
             .vpc_event-ball {
               position: absolute;
-              top: 0.1rem;
+              top: 0.1em;
             }
             .vpc_event-start-time span {
               display: contents;
             }
             .vpc_event-title {
-              margin: 0 0.8rem;
+              margin: 0 0.8em;
             }
           }
         }

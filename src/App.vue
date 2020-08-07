@@ -6,18 +6,7 @@
                     :show-date="$moment('1399/05/26', 'jYYYY/jMM/jDD')"
                     :display-period.sync="period"
             >
-                <template slot="event" slot-scope="i">
-                   <div
-                        :key="i.value.id"
-                        :class="i.value.classes"
-                        :style="`top:${i.top};background-color:${i.value.color};`"
-                        class="vpc_event"
-                        style="border:2px dashed #eee"
-                >
-                    <!--  Anything You Wish -->
-                    <span class="vpc_event-title" style="text-decoration: underline">{{ i.value.title }}</span>
-                </div>
-                </template>
+                
             </persian-calendar>
             <h2>Current Display Period {{period}}</h2>
         </div>

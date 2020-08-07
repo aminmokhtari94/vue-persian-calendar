@@ -4,7 +4,7 @@
       <div id="vpc_header" slot="header">
         <div id="vpc_date-control">
           <div class="vpc_control-btn" @click="subtractPeriod" :disabled="isBeforeMin()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </div>
 
           <span v-if="isWeekPeriod" class="vpc_now-date">
@@ -13,7 +13,7 @@
           <span v-else class="vpc_now-date">{{currentDate.locale('fa').format('jMMMM jYYYY').toPersianDigits()}}</span>
 
           <div class="vpc_control-btn" @click="addPeriod" :disabled="isAfterMax()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
           </div>
           <div v-if="!disableToday" class="vpc_today-btn" @click="goToday">امروز</div>
         </div>
@@ -403,9 +403,9 @@ export default {
     getEventTop (e) {
       // Compute the top position of the event based on its assigned row within the given week.
       const r = e.eventRow
-      const h = this.isWeekPeriod ? '40px' : '20px'
+      const h = this.isWeekPeriod ? '2.6em' : '1.3em'
       const b = '2px'
-      return `calc( 35px + ${r}*${h} + ${r}*${b})`
+      return `calc( 2.5em + ${r}*${h} + ${r}*${b})`
     }
   }
 }
