@@ -149,6 +149,17 @@ $calendar_border: 1px solid $border_color;
   direction: rtl;
   user-select: none;
 
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    outline: none;
+    text-transform: none;
+    text-decoration: none;
+  }
+
   #vpc_header {
     padding: 20px 15px;
     display: flex;
@@ -281,6 +292,9 @@ $calendar_border: 1px solid $border_color;
             line-height: 1.5em;
             width: 1.2em;
             height: 1.2em;
+            padding: 0.1em;
+            margin-top: -0.1em;
+            margin-right: -0.1em;
             border-radius: 9999px !important;
             background-color: $primary_color !important;
             color: #fff !important;
