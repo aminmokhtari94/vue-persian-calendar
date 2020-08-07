@@ -1,6 +1,6 @@
 {
   "name": "vue-persian-calendar",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "private": false,
   "main": "dist/persian-calendar.umd.js",
   "browser": {
