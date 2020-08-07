@@ -324,6 +324,7 @@ $calendar_border: 1px solid $border_color;
       .vpc_event {
         @include text-center;
         font-size: 0.9em;
+        height: 1.1em;
         padding-left: 0.78em;
         border-color: #e0e0f0;
         border-radius: 0.5em;
