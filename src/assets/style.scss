@@ -79,69 +79,26 @@ $calendar_border: 1px solid $border_color;
 
 @font-face {
   font-family: Vazir;
-  src: url('~vazir-font/dist/Vazir.eot');
-  src: url('~vazir-font/dist/Vazir.eot?#iefix') format('embedded-opentype'),
-  url('~vazir-font/dist/Vazir.woff2') format('woff2'),
-  url('~vazir-font/dist/Vazir.woff') format('woff'),
-  url('~vazir-font/dist/Vazir.ttf') format('truetype');
+  src: url('/node_modules/vazir-font/dist/Vazir.eot');
+  src: url('/node_modules/vazir-font/dist/Vazir.eot?#iefix') format('embedded-opentype'),
+  url('/node_modules/vazir-font/dist/Vazir.woff2') format('woff2'),
+  url('/node_modules/vazir-font/dist/Vazir.woff') format('woff'),
+  url('/node_modules/vazir-font/dist/Vazir.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: Vazir;
-  src: url('~vazir-font/dist/Vazir-Bold.eot');
-  src: url('~vazir-font/dist/Vazir-Bold.eot?#iefix') format('embedded-opentype'),
-  url('~vazir-font/dist/Vazir-Bold.woff2') format('woff2'),
-  url('~vazir-font/dist/Vazir-Bold.woff') format('woff'),
-  url('~vazir-font/dist/Vazir-Bold.ttf') format('truetype');
+  src: url('/node_modules/vazir-font/dist/Vazir-Bold.eot');
+  src: url('/node_modules/vazir-font/dist/Vazir-Bold.eot?#iefix') format('embedded-opentype'),
+  url('/node_modules/vazir-font/dist/Vazir-Bold.woff2') format('woff2'),
+  url('/node_modules/vazir-font/dist/Vazir-Bold.woff') format('woff'),
+  url('/node_modules/vazir-font/dist/Vazir-Bold.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
 }
 
-@font-face {
-  font-family: Vazir;
-  src: url('~vazir-font/dist/Vazir-Black.eot');
-  src: url('~vazir-font/dist/Vazir-Black.eot?#iefix') format('embedded-opentype'),
-  url('~vazir-font/dist/Vazir-Black.woff2') format('woff2'),
-  url('~vazir-font/dist/Vazir-Black.woff') format('woff'),
-  url('~vazir-font/dist/Vazir-Black.ttf') format('truetype');
-  font-weight: 900;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: Vazir;
-  src: url('~vazir-font/dist/Vazir-Medium.eot');
-  src: url('~vazir-font/dist/Vazir-Medium.eot?#iefix') format('embedded-opentype'),
-  url('~vazir-font/dist/Vazir-Medium.woff2') format('woff2'),
-  url('~vazir-font/dist/Vazir-Medium.woff') format('woff'),
-  url('~vazir-font/dist/Vazir-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: Vazir;
-  src: url('~vazir-font/dist/Vazir-Light.eot');
-  src: url('~vazir-font/dist/Vazir-Light.eot?#iefix') format('embedded-opentype'),
-  url('~vazir-font/dist/Vazir-Light.woff2') format('woff2'),
-  url('~vazir-font/dist/Vazir-Light.woff') format('woff'),
-  url('~vazir-font/dist/Vazir-Light.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: Vazir;
-  src: url('~vazir-font/dist/Vazir-Thin.eot');
-  src: url('~vazir-font/dist/Vazir-Thin.eot?#iefix') format('embedded-opentype'),
-  url('~vazir-font/dist/Vazir-Thin.woff2') format('woff2'),
-  url('~vazir-font/dist/Vazir-Thin.woff') format('woff'),
-  url('~vazir-font/dist/Vazir-Thin.ttf') format('truetype');
-  font-weight: 100;
-  font-style: normal;
-}
 
 #persian-calendar {
   font-family: 'Vazir', sans-serif;

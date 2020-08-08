@@ -1,19 +1,28 @@
+
 # Vue Persian Calendar
+
 ## Preview images
+
 ![alt text](https://github.com/aminmokhtari94/vue-persian-calendar/blob/master/preview_images/month.png?raw=true)
 
 ![alt text](https://github.com/aminmokhtari94/vue-persian-calendar/blob/master/preview_images/week.png?raw=true)
 
 ## Installation
+
 install with yarn:
-```
+
+```text
 yarn add vue-persian-calendar vue-jalali-moment
 ```
+
 or npm:
-```
+
+```text
 npm i -S add vue-persian-calendar vue-jalali-moment
 ```
+
 then use component in vue to access it from all components:
+
  ```js
 // import Vue from 'vue'
 // ...
@@ -26,14 +35,19 @@ Vue.use(PersianCalendar)
 
 // ...
 ```
+
 ### recommend reading
- - [vue jalali moment](https://www.npmjs.com/package/vue-jalali-moment)
- - [jalali moment](https://www.npmjs.com/package/jalali-moment)
- - [moment js](https://momentjs.com/docs/#/displaying/calendar-time/)
+
+- [vue jalali moment](https://www.npmjs.com/package/vue-jalali-moment)
+- [jalali moment](https://www.npmjs.com/package/jalali-moment)
+- [moment js](https://momentjs.com/docs/#/displaying/calendar-time/)
+
 ## Usage
+
 ```vue
 <persian-calendar></persian-calendar>
 ```
+
 ## Available props
 
 |Prop                   | Type     | Default   | Description                                            |
@@ -48,7 +62,9 @@ Vue.use(PersianCalendar)
 | hide-event-times      | Boolean  | false     | If set, Event date and time won't show                 |
 | hide-month-shadow     | Boolean  | false     | If set, Shadow of days not in showing month won't show |
 | hide-past-days-shadow | Boolean  | false     | If set, Shadow of past days won't show                 |
+
 ## Events
+
 These events emitted on actions in the persian calendar:
 
 | Event             | Output     | Description                          |
@@ -58,7 +74,9 @@ These events emitted on actions in the persian calendar:
 | on-display-period-change     | 'week' \| 'month' | Display Period has been changed  |
 | on-page-add     |      | Display Page has been added |
 | on-page-subtract     |      | Display Page has been subtracted |
+
 ## Event Item Properties
+
 | name      | Type     | Description                                            |
 |------------|----------|--------------------------------------------------------|
 | id  | String\|Number   | A unique identifier for the event. This is required and must be unique. |
@@ -69,16 +87,21 @@ These events emitted on actions in the persian calendar:
 | color  | String  | CSS Color for event background |
 
 ## Slots
+
 ### header
+
 This **optional** named slot replaces the calendar's header. Generally, this would show the current date range, and allow the user to navigate back and forth through time. If you don't provide a component for this slot, there comes with a nice default header component, which you can either use directly, or use as a template for creating your own.
+
 ### event
+
 This **optional** named slot replaces the div.item for each item (not just the contents of the items element, the entire element). Use this if you want to override entirely how items are rendered. For example, on a small mobile device, you may want to show just a thin stripe, dots, or icons to indicate items, without titles or times. This slot passes three scoped variables:
 
 - `value`: the normalized calendar item
 - `weekStartDate`: the date of the first day of the week being rendered
 - `top`: the CSS top value that you should apply to the style of your item element so it appears in the proper place. Assumes standard metrics for items, so if you have your own metrics, you'll need to compute and apply the top position yourself using the itemow value passed in the item.
 
-example of using `event` slot: 
+example of using `event` slot:  
+
 ```vue
 <template>
     <div>
