@@ -77,31 +77,8 @@ $calendar_border: 1px solid $border_color;
   height: 1em;
 }
 
-@font-face {
-  font-family: Vazir;
-  src: url('/node_modules/vazir-font/dist/Vazir.eot');
-  src: url('/node_modules/vazir-font/dist/Vazir.eot?#iefix') format('embedded-opentype'),
-  url('/node_modules/vazir-font/dist/Vazir.woff2') format('woff2'),
-  url('/node_modules/vazir-font/dist/Vazir.woff') format('woff'),
-  url('/node_modules/vazir-font/dist/Vazir.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: Vazir;
-  src: url('/node_modules/vazir-font/dist/Vazir-Bold.eot');
-  src: url('/node_modules/vazir-font/dist/Vazir-Bold.eot?#iefix') format('embedded-opentype'),
-  url('/node_modules/vazir-font/dist/Vazir-Bold.woff2') format('woff2'),
-  url('/node_modules/vazir-font/dist/Vazir-Bold.woff') format('woff'),
-  url('/node_modules/vazir-font/dist/Vazir-Bold.ttf') format('truetype');
-  font-weight: bold;
-  font-style: normal;
-}
-
-
 #persian-calendar {
-  font-family: 'Vazir', sans-serif;
+  font-weight: normal;
   font-size: 1em;
   direction: rtl;
   user-select: none;

@@ -42,7 +42,6 @@
     "serve": "vue-cli-service serve"
   },
   "dependencies": {
-    "vazir-font": "^26.0.2",
     "vue-jalali-moment": "^1.0.0"
   },
   "devDependencies": {
@@ -55,6 +54,7 @@
     "eslint-plugin-vue": "^6.2.2",
     "sass": "^1.26.10",
     "sass-loader": "^9.0.2",
+    "vazir-font": "^26.0.2",
     "vue": "^2.6.11",
     "vue-template-compiler": "^2.6.11"
   },
