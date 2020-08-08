@@ -1,0 +1,62 @@
+{
+    "persian-calendar/show-date": {
+        "type": "moment",
+        "description": "Init Date of the calendar"
+    },
+    "persian-calendar/display-period": {
+        "type": "String",
+        "description": "set display period 'month' or 'week'. (default: month)"
+    },
+    "persian-calendar/events-list": {
+        "type": "array",
+        "description": "List of Events"
+    },
+    "persian-calendar/min": {
+        "type": "moment",
+        "description": "Limit minimum time to navigate to"
+    },
+    "persian-calendar/max": {
+        "type": "moment",
+        "description": "Limit minimum time to navigate to"
+    },
+    "persian-calendar/disable-today": {
+        "type": "Boolean",
+        "description": "If set, Today button and today mark won't show"
+    },
+    "persian-calendar/disable-period": {
+        "type": "Boolean",
+        "description": "If set, Period change button won't show"
+    },
+    "persian-calendar/hide-event-times": {
+        "type": "Boolean",
+        "description": "If set, Event date and time won't show"
+    },
+    "persian-calendar/hide-month-shadow": {
+        "type": "Boolean",
+        "description": "If set, Shadow of days not in showing month won't show"
+    },
+    "persian-calendar/hide-past-days-shadow": {
+        "type": "Boolean",
+        "description": "If set, Shadow of past days won't show"
+    },
+    "persian-calendar/on-day-click":{
+        "type": "event function",
+        "description": "A Day has been selected"
+    },
+    "persian-calendar/on-event-click":{
+        "type": "event function",
+        "description": "An Event has been selected"
+    },
+    "persian-calendar/on-display-period-change":{
+        "type": "event function",
+        "description": "Display Period has been changed"
+    },
+    "persian-calendar/on-page-add":{
+        "type": "event function",
+        "description": "Display Page has been added"
+    },
+    "persian-calendar/on-page-subtract":{
+        "type": "event function",
+        "description": "Display Page has been subtracted"
+    },
+}

@@ -1,0 +1,22 @@
+{
+    "persian-calendar": {
+        "attributes": [
+            "show-date",
+            "display-period",
+            "events-list",
+            "min",
+            "max",
+            "disable-today",
+            "disable-period",
+            "hide-event-times",
+            "hide-month-shadow",
+            "hide-past-days-shadow",
+            "on-day-click",
+            "on-event-click",
+            "on-display-period-change",
+            "on-page-add",
+            "on-page-subtract"
+        ],
+        "description": "A Persian Calendar with Events viewer for Vue.js"
+    }
+}
