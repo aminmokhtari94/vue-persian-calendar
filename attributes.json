@@ -39,24 +39,24 @@
         "type": "Boolean",
         "description": "If set, Shadow of past days won't show"
     },
-    "persian-calendar/on-day-click":{
+    "persian-calendar/on-day-click": {
         "type": "event function",
         "description": "A Day has been selected"
     },
-    "persian-calendar/on-event-click":{
+    "persian-calendar/on-event-click": {
         "type": "event function",
         "description": "An Event has been selected"
     },
-    "persian-calendar/on-display-period-change":{
+    "persian-calendar/on-display-period-change": {
         "type": "event function",
         "description": "Display Period has been changed"
     },
-    "persian-calendar/on-page-add":{
+    "persian-calendar/on-page-add": {
         "type": "event function",
         "description": "Display Page has been added"
     },
-    "persian-calendar/on-page-subtract":{
+    "persian-calendar/on-page-subtract": {
         "type": "event function",
         "description": "Display Page has been subtracted"
-    },
+    }
 }
