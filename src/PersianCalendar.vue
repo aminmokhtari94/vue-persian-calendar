@@ -15,7 +15,7 @@
           <div class="vpc_control-btn" @click="addPeriod" :disabled="isAfterMax()">
             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
           </div>
-          <div v-if="!disableToday" class="vpc_today-btn" @click="goToday">امروز</div>
+          <div v-if="!disableToday" class="vpc_today-btn" @click="goToday" :disabled="todayBtnDisable">امروز</div>
         </div>
           <div v-if="!disablePeriod" class="vpc_period-control">
               <div class="vpc_period-btn" @click="togglePeriod">{{displayPeriodText}}</div>
@@ -88,8 +88,14 @@
 export default {
   name: 'PersianCalendar',
   props: {
+    dateFormat:{
+      type: String,
+      default () {
+        return 'jYYYY/jMM/jDD'
+      }
+    },
     showDate: {
-      type:Object,
+      type: [Object, String],
       default () {
         return this.$moment()
       }
@@ -101,8 +107,8 @@ export default {
         return []
       }
     },
-    min: Object,
-    max: Object,
+    minDate: [Object, String],
+    maxDate: [Object, String],
     hideEventTimes: {
       type: Boolean,
       default () {
@@ -141,7 +147,9 @@ export default {
       transitionAction: 'slide-right',
       addEventModalShow: false,
       period: 'month',
-      events: []
+      events: [],
+      min: null,
+      max: null
     }
   },
   computed:{
@@ -230,6 +238,17 @@ export default {
 
       return `${start.locale('fa').format(startformat)} - ${end.locale('fa').format('DD jMMMM jYYYY')}`
     },
+    todayBtnDisable () {
+      if (this.min) {
+        if (this.max) return !this.$moment().isBetween(this.$moment(this.min).startOf('day'), this.$moment(this.max).endOf('day'))
+
+        return this.min.isAfter(this.$moment().startOf('day'), 'day')
+      }
+      if (this.max) {
+        return this.max.isBefore(this.$moment().endOf('day'), 'day')
+      }
+      return false
+    },
     weekClassObject () {
       return {
         'vpc_week': true,
@@ -243,21 +262,37 @@ export default {
       this.currentDateChange = false
     },
     showDate (value) {
-      this.currentDate = value
+      this.currentDate = this.getDateByFormat(value)
     },
     displayPeriod (value) {
       this.period = value
     },
     eventsList (value) {
       this.events = value
+    },
+    minDate (value) {
+      this.min = this.getDateByFormat(value)
+    },
+    maxDate (value) {
+      this.max = this.getDateByFormat(value)
     }
   },
   created () {
-    this.currentDate = this.showDate
+    this.currentDate = this.getDateByFormat(this.showDate)
+    if (this.minDate) this.min = this.getDateByFormat(this.minDate)
+    if (this.maxDate) this.max = this.getDateByFormat(this.maxDate)
     this.period = this.displayPeriod
     this.events = this.eventsList
   },
   methods:{
+    getDateByFormat (value) {
+      try {
+        if (typeof value === 'string') return this.$moment(value, this.dateFormat)
+        else if (typeof value === 'object') return this.$moment(value)
+      } catch (error) {
+        throw new TypeError('[VuePersianCalendar Error]: showDate property value is not valid')
+      }
+    },
     isAfterMax () {
       if (!this.max) return
       const newDate = this.$moment(this.currentDate).add(1, this.isWeekPeriod ? 'weeks' : 'months')
@@ -283,6 +318,7 @@ export default {
       this.$emit('on-page-subtract', this.currentDate)
     },
     goToday () {
+      if (this.todayBtnDisable) return
       if (this.currentDate.isBefore(this.$moment(), 'month') || (this.isWeekPeriod && this.currentDate.isBefore(this.$moment().startOf('jWeek')))) {
         this.transitionAction = 'slide-left'
         this.currentDate = this.$moment()
@@ -411,5 +447,5 @@ export default {
 }
 </script>
 <style lang="sass">
-  @import "assets/style"
+    @import "assets/style"
 </style>

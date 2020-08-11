@@ -1,4 +1,8 @@
 {
+    "persian-calendar/date-format": {
+        "type": "String",
+        "description": "Date input format of show-date, min-date, max-date"
+    },
     "persian-calendar/show-date": {
         "type": "moment",
         "description": "Init Date of the calendar"
@@ -8,14 +12,14 @@
         "description": "set display period 'month' or 'week'. (default: month)"
     },
     "persian-calendar/events-list": {
-        "type": "array",
+        "type": "Array",
         "description": "List of Events"
     },
-    "persian-calendar/min": {
+    "persian-calendar/min-date": {
         "type": "moment",
         "description": "Limit minimum time to navigate to"
     },
-    "persian-calendar/max": {
+    "persian-calendar/max-date": {
         "type": "moment",
         "description": "Limit minimum time to navigate to"
     },

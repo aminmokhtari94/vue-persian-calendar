@@ -134,6 +134,11 @@ $calendar_border: 1px solid $border_color;
         cursor: pointer !important;
         background-color: $primary_color !important;
         color: #fff !important;
+
+        &[disabled] {
+          background-color: #ccc !important;
+          cursor: not-allowed !important;
+        }
       }
     }
 
@@ -238,10 +243,6 @@ $calendar_border: 1px solid $border_color;
 
         &.vpc_day-disable {
           background-color: $not_current_month_background !important;
-
-          .vpc_day-number {
-            @include shadow-text;
-          }
         }
 
         .vpc_day-number {

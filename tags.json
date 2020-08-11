@@ -1,11 +1,12 @@
 {
     "persian-calendar": {
         "attributes": [
+            "date-format",
             "show-date",
             "display-period",
             "events-list",
-            "min",
-            "max",
+            "min-date",
+            "max-date",
             "disable-today",
             "disable-period",
             "hide-event-times",

@@ -52,11 +52,12 @@ Vue.use(PersianCalendar)
 
 |Prop                   | Type     | Default   | Description                                            |
 |-----------------------|----------|-----------|--------------------------------------------------------|
+| date-format           | String   | 'jYYYY/jMM/jDD' | Date input format of show-date, min-date, max-date |
 | show-date             | [Jalali Moment Object](https://github.com/fingerpich/jalali-moment)   | $moment() | Init Date of the calendar                              |
 | display-period        | String   | 'month'   | 'month' or 'week' period                               |
 | events-list           | Array of [EventObject](#event-item-properties)   | []        | List of Events                                         |
-| min                   | [Jalali Moment Object](https://github.com/fingerpich/jalali-moment)   | null      | Limit minimum time to navigate to                      |
-| max                   | [Jalali Moment Object](https://github.com/fingerpich/jalali-moment)   | null      | Limit minimum time to navigate to                      |
+| min-date              | [Jalali Moment Object](https://github.com/fingerpich/jalali-moment)   | null      | Limit minimum time to navigate to                      |
+| max-date              | [Jalali Moment Object](https://github.com/fingerpich/jalali-moment)   | null      | Limit minimum time to navigate to                      |
 | disable-today         | Boolean  | false     | If set, Today button and today mark won't show         |
 | disable-period        | Boolean  | false     | If set, Period change button won't show                |
 | hide-event-times      | Boolean  | false     | If set, Event date and time won't show                 |
