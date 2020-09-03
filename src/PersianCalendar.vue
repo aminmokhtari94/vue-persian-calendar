@@ -180,7 +180,7 @@ export default {
       // Add previous days to start
       currentDay = this.$moment(days[0])
       const SHANBE = 0
-      const YEK_SHANBE = 1
+      const JOMEE = 6
       if (currentDay.jDay() !== SHANBE) {
         do {
           currentDay = this.$moment(currentDay).subtract(1, 'days')
@@ -189,11 +189,11 @@ export default {
       }
       // Add following days to end
       currentDay = this.$moment(days[days.length - 1])
-      if (currentDay.jDay() !== YEK_SHANBE) {
+      if (currentDay.jDay() !== JOMEE) {
         do {
           currentDay = this.$moment(currentDay).add(1, 'days')
           days.push(currentDay)
-        } while (currentDay.jDay() !== YEK_SHANBE)
+        } while (currentDay.jDay() !== JOMEE)
       }
       return days
     },
