@@ -3,8 +3,6 @@
     <persian-calendar
       :events-list="events"
       :show-date="showDate"
-      :min-date="min"
-      :max-date="max"
       :display-period.sync="period"
     >
     </persian-calendar>
@@ -26,7 +24,7 @@ export default {
       min: this.$moment('1399/05/20', 'jYYYY/jMM/jDD'),
       max:'1399/05/21',
       events:[
-        {id:1, startDateTime:this.$moment('1399/05/07 19:30', 'jYYYY/jMM/jDD HH:mm'), endDateTime:this.$moment('1399/05/09 07:15', 'jYYYY/jMM/jDD HH:mm'), title:'رویداد شماره ۱', color:'#2a79b8', classes: ['asd', '123']},
+        {id:1, startDateTime:this.$moment('2020-09-06T13:37:41.020+00:00'), endDateTime:this.$moment('2020-09-06T20:49:41.020+00:00'), title:'رویداد شماره ۱', color:'#2a79b8', classes: ['asd', '123']},
         {id:2, startDateTime:this.$moment('1399/05/13 10:30', 'jYYYY/jMM/jDD HH:mm'), endDateTime:this.$moment('1399/05/13 15:00', 'jYYYY/jMM/jDD HH:mm'), title:'رویداد شماره ۲', color:'#a71749', classes: []},
         {id:7, startDateTime:this.$moment('1399/05/13 10:30', 'jYYYY/jMM/jDD HH:mm'), endDateTime:this.$moment('1399/05/13 11:30', 'jYYYY/jMM/jDD HH:mm'), title:'گفتگوی اسکایپی با مدیر شرکت آرمان', color:'#a71749'},
         {id:4, startDateTime:this.$moment('1399/05/09 10:30', 'jYYYY/jMM/jDD HH:mm'), endDateTime:this.$moment('1399/05/13 14:00', 'jYYYY/jMM/jDD HH:mm'), title:'رویداد شماره ۳', color:'#34147e', classes: []},

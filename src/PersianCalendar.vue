@@ -278,6 +278,7 @@ export default {
     }
   },
   created () {
+    // this.$moment.locale('fa')
     this.currentDate = this.getDateByFormat(this.showDate)
     if (this.minDate) this.min = this.getDateByFormat(this.minDate)
     if (this.maxDate) this.max = this.getDateByFormat(this.maxDate)
@@ -410,13 +411,13 @@ export default {
           eventRow: 0
         })
         const continued = ep.startDateTime.isBefore(weekStart)
-        const startOffset = continued ? 0 : ep.startDateTime.diff(weekStart, 'days')
+        const startOffset = continued ? 0 : this.diff(ep.startDateTime, weekStart, 'jD')
 
-        const spanContinued =  continued ? this.$moment(ep.endDateTime).diff(weekStart, 'days') + 1 : this.$moment(ep.endDateTime).diff(ep.startDateTime, 'days') + 1
+        const spanContinued =  continued ? this.diff(this.$moment(ep.endDateTime), weekStart, 'jD') + 1 : this.diff(this.$moment(ep.endDateTime), ep.startDateTime, 'jD') + 1
         const span = Math.min(7 - startOffset, spanContinued)
 
         if (continued) ep.classes.push('continued')
-        if (ep.endDateTime.diff(weekStart, 'days') > 6) ep.classes.push('toBeContinued')
+        if (this.diff(ep.endDateTime, weekStart, 'jD') > 6) ep.classes.push('toBeContinued')
         if (ep.endDateTime.isBefore(this.$moment())) ep.classes.push('past')
         if (ep.endDateTime.isBetween(this.$moment(ep.startDateTime), this.$moment(ep.startDateTime).hours(23).minutes(59).seconds(59), undefined, '[]')) ep.classes.push('oneDay')
 
@@ -442,6 +443,9 @@ export default {
       const h = this.isWeekPeriod ? '2.6em' : '1.3em'
       const b = '2px'
       return `calc( 2.5em + ${r}*${h} + ${r}*${b})`
+    },
+    diff (e, s, f) {
+      return parseInt(e.format(f)) - parseInt(s.format(f))
     }
   }
 }
