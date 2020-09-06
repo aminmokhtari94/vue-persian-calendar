@@ -411,15 +411,15 @@ export default {
           eventRow: 0
         })
         const continued = ep.startDateTime.isBefore(weekStart)
-        const startOffset = continued ? 0 : this.diff(ep.startDateTime, weekStart, 'jD')
+        const startOffset = continued ? 0 : this.diff(ep.startDateTime, weekStart)
 
-        const spanContinued =  continued ? this.diff(this.$moment(ep.endDateTime), weekStart, 'jD') + 1 : this.diff(this.$moment(ep.endDateTime), ep.startDateTime, 'jD') + 1
+        const spanContinued =  continued ? this.diff(this.$moment(ep.endDateTime), weekStart) + 1 : this.diff(this.$moment(ep.endDateTime), ep.startDateTime) + 1
         const span = Math.min(7 - startOffset, spanContinued)
 
         if (continued) ep.classes.push('continued')
-        if (this.diff(ep.endDateTime, weekStart, 'jD') > 6) ep.classes.push('toBeContinued')
+        if (this.diff(ep.endDateTime, weekStart) > 6) ep.classes.push('toBeContinued')
         if (ep.endDateTime.isBefore(this.$moment())) ep.classes.push('past')
-        if (ep.endDateTime.isBetween(this.$moment(ep.startDateTime), this.$moment(ep.startDateTime).hours(23).minutes(59).seconds(59), undefined, '[]')) ep.classes.push('oneDay')
+        if (ep.endDateTime.isBetween(this.$moment(ep.startDateTime), this.$moment(ep.startDateTime).endOf('day'), undefined, '[]')) ep.classes.push('oneDay')
 
         for (let d = 0; d < 7; d++) {
           if (d === startOffset) {
@@ -444,8 +444,16 @@ export default {
       const b = '2px'
       return `calc( 2.5em + ${r}*${h} + ${r}*${b})`
     },
-    diff (e, s, f) {
-      return parseInt(e.format(f)) - parseInt(s.format(f))
+    diff (e, s) {
+      s.locale('fa')
+      e.locale('fa')
+      const add_diff = s.clone().startOf('day').add(e.diff(s, 'm'), 'm').locale('fa'),
+        diff = e.diff(s, 'day')
+      
+      if (add_diff.isBefore(e, 'day')) return diff + 1
+      return diff
+      //const diff = e.diff(s, 'day')
+      //if (parseInt(e.format('jD')) > parseInt(s.format('jD'))) return parseInt(e.format('jD')) - parseInt(s.format('jD'))
     }
   }
 }
