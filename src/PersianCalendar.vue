@@ -75,7 +75,7 @@
                   :class="dayClassObject(day)"
                   @click="$emit('on-day-click', day)"
               >
-                <div class="vpc_day-number">{{ day.format('D').toPersianDigits() }}</div>
+                <div class="vpc_day-number">{{ day.format('jD').toPersianDigits() }}</div>
               </div>
             </div>
           </div>
@@ -229,14 +229,14 @@ export default {
       return this.isWeekPeriod ? 'ماه' : 'هفته'
     },
     displayRangeText () {
-      const start = this.$moment(this.currentDate).startOf('jWeek')
-      const end = this.$moment(start).add(6, 'days')
+      const start = this.$moment(this.currentDate).locale('fa').startOf('jWeek')
+      const end = this.$moment(start).locale('fa').add(6, 'days')
       let startformat = 'DD'
 
       if (!start.isSame(end, 'month')) startformat = 'DD jMMMM'
       if (!start.isSame(end, 'year')) startformat = 'DD jMMMM jYYYY'
 
-      return `${start.locale('fa').format(startformat)} - ${end.locale('fa').format('DD jMMMM jYYYY')}`
+      return `${start.format(startformat)} - ${end.format('DD jMMMM jYYYY')}`
     },
     todayBtnDisable () {
       if (this.min) {

@@ -66,8 +66,6 @@ export default {
   },
   methods: {
     addEvent (day) {
-      const s = this.$moment('2020-09-06T13:37:41.020+00:00'), e = this.$moment('2020-09-06T20:49:41.020+00:00')
-      console.log(s.format(), s.locale('fa').diff(e.locale('fa'), 'month'), e.format())
       this.id += 1
       // console.log(day.format())
       this.events.push({
