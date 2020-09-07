@@ -8,7 +8,7 @@ $md: 'screen and (min-width: 769px) and (max-width: 991px)';
 $lg: 'screen and (min-width: 992px) and (max-width: 1200px)';
 /** Extra large devices (large laptops and desktops, 1201px and up) */
 $xl: 'screen and (min-width: 1201px)';
-// The mdia mixin
+// The media mixin
 @mixin media( $selectors... ) {
   $selector: '';
   @each $s in $selectors {
@@ -23,6 +23,7 @@ $xl: 'screen and (min-width: 1201px)';
   }
 }
 
+// Color variables
 $primary_color: #7367F0;
 $background: #fff;
 $past_background: rgb(250, 250, 250);
@@ -443,5 +444,93 @@ $calendar_border: 1px solid $border_color;
     transform: translateX(-10px);
     opacity: 0;
   }
+
+  &[dir="ltr"] {
+  direction: ltr !important;
+
+  #vpc_header {
+    .vpc_control-btn {
+      transform: rotate(180deg);
+    }
+    .vpc_period-control {
+      margin-right: unset !important;
+      margin-left: auto;
+    }
+  }
+
+  #vpc_calendar {
+    #vpc_days-header {
+
+      div {
+        &:first-child {
+          border-top-right-radius: unset !important;
+          border-top-left-radius: 15px;
+        }
+
+        &:last-child {
+          border-top-left-radius: unset !important;
+          border-top-right-radius: 15px;
+          border-left: unset !important;
+          border-right: $calendar_border;
+        }
+      }
+    }
+
+    .vpc_week {
+      .vpc_day {
+        &.vpc_today {
+          .vpc_day-number {
+            margin-right: unset !important;
+            margin-left: 0;
+          }
+        }
+        &:last-child {
+          border-left: unset !important;
+          border-right: $calendar_border;
+        }
+      }
+
+      /* Events */
+      .vpc_event {
+        padding-left: unset !important;
+        padding-right: 0.78em;
+
+        &.offset0 {
+          right: unset !important;
+          left: 0;
+        }
+
+        $i: 1;
+        @while $i <= 7 {
+          &.offset#{$i} {
+            right: unset !important;
+            left: calc((#{$i+'00%'} / 7));
+          }
+          $i: $i+1;
+        }
+
+        &.continued {
+          border-radius: 0 15px 15px 0 !important;
+        }
+
+        &.toBeContinued {
+          border-radius: 15px 0 0 15px !important;
+        }
+
+        &.continued::before,
+        &.toBeContinued::after {
+          content: " \21e2 " !important;
+        }
+
+        &.oneDay {
+          .vpc_event-title {
+            margin-right: unset !important;
+            margin-left: 0;
+          }
+        }
+      }
+    }
+  }
+}
 
 }

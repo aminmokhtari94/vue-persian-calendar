@@ -2,7 +2,6 @@
   <div id="app">
     <persian-calendar
       :events-list="events"
-      :show-date="showDate"
       :display-period.sync="period"
       @on-day-click="addEvent"
     >
@@ -21,14 +20,13 @@ export default {
   data () {
     return {
       period:'week',
-      showDate:'1399/05/01',
       min: this.$moment('1399/05/20', 'jYYYY/jMM/jDD'),
       max:'1399/05/21',
       id:90,
       events:[
         {id:1, 
-          startDateTime:this.$moment('2020-09-06T13:37:41.020+00:00'),
-          endDateTime:this.$moment('2020-09-06T20:49:41.020+00:00'),
+          startDateTime:this.$moment('2020-09-06T13:37:41.020+04:30'),
+          endDateTime:this.$moment('2020-09-07T00:49:41.020+04:30'),
           title:'رویداد شماره ۱',
           color:'#2a79b8',
           classes: ['asd', '123']},

@@ -1,5 +1,5 @@
 <template>
-    <div id="persian-calendar">
+    <div id="persian-calendar" dir="rtl">
       <!--CALENDAR HEADER-->
       <div id="vpc_header" slot="header">
         <div id="vpc_date-control">
@@ -10,7 +10,7 @@
           <span v-if="isWeekPeriod" class="vpc_now-date">
               {{displayRangeText.toPersianDigits()}}
           </span>
-          <span v-else class="vpc_now-date">{{currentDate.locale('fa').format('jMMMM jYYYY').toPersianDigits()}}</span>
+          <span v-else class="vpc_now-date">{{currentDate.format('MMMM YYYY').toPersianDigits()}}</span>
 
           <div class="vpc_control-btn" @click="addPeriod" :disabled="isAfterMax()">
             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
@@ -30,13 +30,13 @@
           <div id="vpc_calendar">
             <!--DAYS HEADER-->
             <div id="vpc_days-header">
-              <div>شنبه</div>
-              <div>یکشنبه</div>
-              <div>دوشنبه</div>
-              <div>سه شنبه</div>
-              <div>چهار شنبه</div>
-              <div>پنج شنبه</div>
-              <div>جمعه</div>
+              <div>{{$moment().isoWeekday(0).format('dddd')}}</div>
+              <div>{{$moment().isoWeekday(1).format('dddd')}}</div>
+              <div>{{$moment().isoWeekday(2).format('dddd')}}</div>
+              <div>{{$moment().isoWeekday(3).format('dddd')}}</div>
+              <div>{{$moment().isoWeekday(4).format('dddd')}}</div>
+              <div>{{$moment().isoWeekday(5).format('dddd')}}</div>
+              <div>{{$moment().isoWeekday(6).format('dddd')}}</div>
             </div>
             <!--WEEKS ROW-->
             <div
@@ -44,10 +44,10 @@
                 :key="week.uid"
                 :class="weekClassObject"
             >
-                <template v-for="i in getWeekEvents(week[0].startOf('jWeek'))">
+                <template v-for="i in getWeekEvents(week[0].startOf('Week'))">
                     <slot
                             :value="i"
-                            :weekStartDate="$moment(week).startOf('jWeek')"
+                            :weekStartDate="$moment(week).startOf('Week')"
                             :top="getEventTop(i)"
                             name="event"
                     >
@@ -61,10 +61,10 @@
                             <div :style="{'background-color':i.color}" class="vpc_event-ball"></div>
                             <span class="vpc_event-start-time" v-if="!hideEventTimes">{{ i.startDateTime.format('HH:mm').toPersianDigits() }}<span> - {{ i.endDateTime.format('HH:mm').toPersianDigits() }} </span>
                             </span>
-                            <span class="vpc_event-start-date" v-if="!hideEventTimes">{{ i.startDateTime.format('jMM/jDD').toPersianDigits() }}</span>
+                            <span class="vpc_event-start-date" v-if="!hideEventTimes">{{ i.startDateTime.format('MM/DD').toPersianDigits() }}</span>
                             <span class="vpc_event-title">{{ i.title }}</span>
                             <span class="vpc_event-end-time" v-if="!hideEventTimes">{{ i.endDateTime.format('HH:mm').toPersianDigits() }}</span>
-                            <span class="vpc_event-end-date" v-if="!hideEventTimes">{{ i.endDateTime.format('jMM/jDD').toPersianDigits() }}</span>
+                            <span class="vpc_event-end-date" v-if="!hideEventTimes">{{ i.endDateTime.format('MM/DD').toPersianDigits() }}</span>
                         </div>
                     </slot>
                 </template>
@@ -75,7 +75,7 @@
                   :class="dayClassObject(day)"
                   @click="$emit('on-day-click', day)"
               >
-                <div class="vpc_day-number">{{ day.format('jD').toPersianDigits() }}</div>
+                <div class="vpc_day-number">{{ day.format('D').toPersianDigits() }}</div>
               </div>
             </div>
           </div>
@@ -91,7 +91,7 @@ export default {
     dateFormat:{
       type: String,
       default () {
-        return 'jYYYY/jMM/jDD'
+        return 'YYYY/MM/DD'
       }
     },
     showDate: {
@@ -153,65 +153,47 @@ export default {
     }
   },
   computed:{
-    month:{
-      get () {
-        return this.currentDate.format('jM')
-      },
-      set (value) {
-        this.currentDate = value
-      }
-    },
-    year: {
-      get () {
-        return this.currentDate.format('jYYYY')
-      },
-      set (value) {
-        this.currentDate = value
-      }
-    },
     daysInMonth () {
       // Generating all days in current month
       const days = []
-      let currentDay = this.$moment(`${this.year}-${this.month}-1`, 'jYYYY-jM-jD').locale('fa')
+      let day = this.currentDate.clone().startOf('month')
       do {
-        days.push(currentDay)
-        currentDay = this.$moment(currentDay).add(1, 'days')
-      } while (this.$moment(currentDay).format('M') === this.month)
+        days.push(day.clone())
+        day.add(1, 'days')
+      } while (day.isSame(this.currentDate, 'month'))
+
       // Add previous days to start
-      currentDay = this.$moment(days[0])
-      const SHANBE = 0
-      const JOMEE = 6
-      if (currentDay.jDay() !== SHANBE) {
+      day = this.currentDate.clone().startOf('month')
+      if (!day.isSame(day.clone().startOf('week'))) {
         do {
-          currentDay = this.$moment(currentDay).subtract(1, 'days')
-          days.unshift(currentDay)
-        } while (currentDay.jDay() !== SHANBE)
+          day.subtract(1, 'days')
+          days.unshift(day.clone())
+        } while (!day.isSame(day.clone().startOf('week')))
       }
+
       // Add following days to end
-      currentDay = this.$moment(days[days.length - 1])
-      if (currentDay.jDay() !== JOMEE) {
+      day = this.currentDate.clone().endOf('month')
+      if (!day.isSame(day.clone().endOf('week'))) {
         do {
-          currentDay = this.$moment(currentDay).add(1, 'days')
-          days.push(currentDay)
-        } while (currentDay.jDay() !== JOMEE)
+          day.add(1, 'days')
+          days.push(day.clone())
+        } while (!day.isSame(day.clone().endOf('week')))
       }
       return days
     },
     daysInWeek () {
-      const days = []
-      const showDay = this.currentDate.locale('fa')
-      let day = showDay.startOf('jWeek')
+      const days = [], day = this.currentDate.clone().startOf('Week')
       do {
-        days.push(day)
-        day = this.$moment(day).add(1, 'days')
-      } while (!day.isSame(this.$moment(showDay).add(7, 'days')))
+        days.push(day.clone())
+        day.add(1, 'days')
+      } while (!day.isSame(day.clone().startOf('week')))
       return days
     },
     weeksInMonth () {
-      const weeks = []
+      const weeks = [], daysInMonth = this.daysInMonth
       let week = []
-      for (let i = 0; i < this.daysInMonth.length; i++) {
-        week.push(this.daysInMonth[i])
+      for (let i = 0; i < daysInMonth.length; i++) {
+        week.push(daysInMonth[i].clone())
         if (week.length === 7) {
           weeks.push(week)
           week = []
@@ -229,14 +211,14 @@ export default {
       return this.isWeekPeriod ? 'ماه' : 'هفته'
     },
     displayRangeText () {
-      const start = this.$moment(this.currentDate).locale('fa').startOf('jWeek')
-      const end = this.$moment(start).locale('fa').add(6, 'days')
+      const start = this.currentDate.clone().startOf('Week')
+      const end = start.clone().endOf('Week')
       let startformat = 'DD'
 
-      if (!start.isSame(end, 'month')) startformat = 'DD jMMMM'
-      if (!start.isSame(end, 'year')) startformat = 'DD jMMMM jYYYY'
+      if (!start.isSame(end, 'month')) startformat = 'DD MMMM'
+      if (!start.isSame(end, 'year')) startformat = 'DD MMMM YYYY'
 
-      return `${start.format(startformat)} - ${end.format('DD jMMMM jYYYY')}`
+      return `${start.format(startformat)} - ${end.format('DD MMMM YYYY')}`
     },
     todayBtnDisable () {
       if (this.min) {
@@ -278,7 +260,7 @@ export default {
     }
   },
   created () {
-    // this.$moment.locale('fa')
+    // this.$moment
     this.currentDate = this.getDateByFormat(this.showDate)
     if (this.minDate) this.min = this.getDateByFormat(this.minDate)
     if (this.maxDate) this.max = this.getDateByFormat(this.maxDate)
@@ -297,13 +279,13 @@ export default {
     isAfterMax () {
       if (!this.max) return
       const newDate = this.$moment(this.currentDate).add(1, this.isWeekPeriod ? 'weeks' : 'months')
-      const periodStart = newDate.startOf(this.isWeekPeriod ? 'jWeek' : 'jMonth')
+      const periodStart = newDate.startOf(this.isWeekPeriod ? 'Week' : 'Month')
       return this.max.isValid() && periodStart.isAfter(this.max)
     },
     isBeforeMin () {
       if (!this.min) return
       const newDate = this.$moment(this.currentDate).subtract(1, this.isWeekPeriod ? 'weeks' : 'months')
-      const periodEnd = this.$moment(this.min).startOf(this.isWeekPeriod ? 'jWeek' : 'jMonth')
+      const periodEnd = this.$moment(this.min).startOf(this.isWeekPeriod ? 'Week' : 'Month')
       return this.min.isValid() && periodEnd.isAfter(newDate)
     },
     addPeriod () {
@@ -320,7 +302,7 @@ export default {
     },
     goToday () {
       if (this.todayBtnDisable) return
-      if (this.currentDate.isBefore(this.$moment(), 'month') || (this.isWeekPeriod && this.currentDate.isBefore(this.$moment().startOf('jWeek')))) {
+      if (this.currentDate.isBefore(this.$moment(), 'month') || (this.isWeekPeriod && this.currentDate.isBefore(this.$moment().startOf('Week')))) {
         this.transitionAction = 'slide-left'
         this.currentDate = this.$moment()
       } else if (this.currentDate.isAfter(this.$moment(), 'month') || (this.isWeekPeriod && this.currentDate.isAfter(this.$moment(), 'week'))) {
@@ -445,15 +427,11 @@ export default {
       return `calc( 2.5em + ${r}*${h} + ${r}*${b})`
     },
     diff (e, s) {
-      s.locale('fa')
-      e.locale('fa')
-      const add_diff = s.clone().startOf('day').add(e.diff(s, 'm'), 'm').locale('fa'),
+      const add_diff = s.clone().startOf('day').add(e.diff(s, 'm'), 'm'),
         diff = e.diff(s, 'day')
-      
+
       if (add_diff.isBefore(e, 'day')) return diff + 1
       return diff
-      //const diff = e.diff(s, 'day')
-      //if (parseInt(e.format('jD')) > parseInt(s.format('jD'))) return parseInt(e.format('jD')) - parseInt(s.format('jD'))
     }
   }
 }
