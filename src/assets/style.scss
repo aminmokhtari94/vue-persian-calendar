@@ -1,5 +1,5 @@
 /** Extra small devices (phones, 600px and down) */
-$xs: "screen and (max-width: 600px)";
+$xs: 'screen and (max-width: 600px)';
 /** Small devices (portrait tablets and large phones, 601px to 768px) */
 $sm: 'screen and (min-width: 601px) and (max-width: 768px)';
 /** Medium devices (landscape tablets, 769px to 991px) */
@@ -9,7 +9,7 @@ $lg: 'screen and (min-width: 992px) and (max-width: 1200px)';
 /** Extra large devices (large laptops and desktops, 1201px and up) */
 $xl: 'screen and (min-width: 1201px)';
 // The media mixin
-@mixin media( $selectors... ) {
+@mixin media($selectors...) {
   $selector: '';
   @each $s in $selectors {
     @if $selector == '' {
@@ -18,13 +18,13 @@ $xl: 'screen and (min-width: 1201px)';
       $selector: $selector + ', ' + $s;
     }
   }
-  @media #{unquote($selector)}{
+  @media #{unquote($selector)} {
     @content;
   }
 }
 
 // Color variables
-$primary_color: #7367F0;
+$primary_color: #7367f0;
 $background: #fff;
 $past_background: rgb(250, 250, 250);
 $not_current_month_background: rgb(236, 236, 236);
@@ -120,7 +120,7 @@ $calendar_border: 1px solid $border_color;
       }
 
       .vpc_now-date {
-        margin: auto .75em;
+        margin: auto 0.75em;
         white-space: nowrap;
       }
 
@@ -163,7 +163,7 @@ $calendar_border: 1px solid $border_color;
 
   #vpc_calendar {
     border-radius: 15px;
-    box-shadow: 0 4px 25px 0 rgba(0, 0, 0, .1);
+    box-shadow: 0 4px 25px 0 rgba(0, 0, 0, 0.1);
 
     #vpc_days-header {
       @include calendar-row;
@@ -285,7 +285,7 @@ $calendar_border: 1px solid $border_color;
           &.offset#{$i} {
             right: calc((#{$i+'00%'} / 7));
           }
-          $i: $i+1;
+          $i: $i + 1;
         }
 
         &.isHovered {
@@ -338,7 +338,7 @@ $calendar_border: 1px solid $border_color;
 
         &.continued::before,
         &.toBeContinued::after {
-          content: " \21e0 ";
+          content: ' \21e0 ';
           padding: 0 0.1em;
         }
 
@@ -386,7 +386,6 @@ $calendar_border: 1px solid $border_color;
           display: none;
         }
 
-
         /* Event Times */
 
         & .startTime,
@@ -427,110 +426,112 @@ $calendar_border: 1px solid $border_color;
     }
   }
 
-  .slide-left-enter-active, .slide-right-enter-active {
-    transition: all .2s ease;
+  .slide-left-enter-active,
+  .slide-right-enter-active {
+    transition: all 0.2s ease;
   }
 
-  .slide-left-leave-active, .slide-right-leave-active {
-    transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  .slide-left-leave-active,
+  .slide-right-leave-active {
+    transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
   }
 
-  .slide-left-enter, .slide-right-leave-to {
+  .slide-left-enter,
+  .slide-right-leave-to {
     transform: translateX(10px);
     opacity: 0;
   }
 
-  .slide-left-leave-to, .slide-right-enter {
+  .slide-left-leave-to,
+  .slide-right-enter {
     transform: translateX(-10px);
     opacity: 0;
   }
 
-  &[dir="ltr"] {
-  direction: ltr !important;
+  &[dir='ltr'] {
+    direction: ltr !important;
 
-  #vpc_header {
-    .vpc_control-btn {
-      transform: rotate(180deg);
-    }
-    .vpc_period-control {
-      margin-right: unset !important;
-      margin-left: auto;
-    }
-  }
-
-  #vpc_calendar {
-    #vpc_days-header {
-
-      div {
-        &:first-child {
-          border-top-right-radius: unset !important;
-          border-top-left-radius: 15px;
-        }
-
-        &:last-child {
-          border-top-left-radius: unset !important;
-          border-top-right-radius: 15px;
-          border-left: unset !important;
-          border-right: $calendar_border;
-        }
+    #vpc_header {
+      .vpc_control-btn {
+        transform: rotate(180deg);
+      }
+      .vpc_period-control {
+        margin-right: unset !important;
+        margin-left: auto;
       }
     }
 
-    .vpc_week {
-      .vpc_day {
-        &.vpc_today {
-          .vpc_day-number {
-            margin-right: unset !important;
-            margin-left: 0;
+    #vpc_calendar {
+      #vpc_days-header {
+        div {
+          &:first-child {
+            border-top-right-radius: unset !important;
+            border-top-left-radius: 15px;
+          }
+
+          &:last-child {
+            border-top-left-radius: unset !important;
+            border-top-right-radius: 15px;
+            border-left: unset !important;
+            border-right: $calendar_border;
           }
         }
-        &:last-child {
-          border-left: unset !important;
-          border-right: $calendar_border;
-        }
       }
 
-      /* Events */
-      .vpc_event {
-        padding-left: unset !important;
-        padding-right: 0.78em;
-
-        &.offset0 {
-          right: unset !important;
-          left: 0;
+      .vpc_week {
+        .vpc_day {
+          &.vpc_today {
+            .vpc_day-number {
+              margin-right: unset !important;
+              margin-left: 0;
+            }
+          }
+          &:last-child {
+            border-left: unset !important;
+            border-right: $calendar_border;
+          }
         }
 
-        $i: 1;
-        @while $i <= 7 {
-          &.offset#{$i} {
+        /* Events */
+        .vpc_event {
+          padding-left: unset !important;
+          padding-right: 0.78em;
+
+          &.offset0 {
             right: unset !important;
-            left: calc((#{$i+'00%'} / 7));
+            left: 0;
           }
-          $i: $i+1;
-        }
 
-        &.continued {
-          border-radius: 0 15px 15px 0 !important;
-        }
+          $i: 1;
+          @while $i <= 7 {
+            &.offset#{$i} {
+              right: unset !important;
+              left: calc((#{$i+'00%'} / 7));
+            }
+            $i: $i + 1;
+          }
 
-        &.toBeContinued {
-          border-radius: 15px 0 0 15px !important;
-        }
+          &.continued {
+            border-radius: 0 15px 15px 0 !important;
+          }
 
-        &.continued::before,
-        &.toBeContinued::after {
-          content: " \21e2 " !important;
-        }
+          &.toBeContinued {
+            border-radius: 15px 0 0 15px !important;
+          }
 
-        &.oneDay {
-          .vpc_event-title {
-            margin-right: unset !important;
-            margin-left: 0;
+          &.continued::before,
+          &.toBeContinued::after {
+            content: ' \21e2 ' !important;
+          }
+
+          &.oneDay {
+            .vpc_event-title {
+              margin-right: unset !important;
+              margin-left: 0;
+            }
           }
         }
       }
     }
   }
-}
-
 }

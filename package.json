@@ -39,7 +39,9 @@
   },
   "scripts": {
     "build": "vue-cli-service build --no-clean --target lib --name persian-calendar src/entry.js",
-    "serve": "vue-cli-service serve"
+    "serve": "vue-cli-service serve",
+    "lint": "eslint --fix \"src/**/*.{js,vue}\" & prettier src/**/*.scss --write",
+    "prepublishOnly": "yarn lint"
   },
   "dependencies": {
     "vue-jalali-moment": "^1.0.0"
@@ -51,7 +53,10 @@
     "babel-eslint": "^10.1.0",
     "core-js": "^3.6.5",
     "eslint": "^6.7.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-vue": "^6.2.2",
+    "prettier-eslint": "^11.0.0",
     "sass": "^1.26.10",
     "sass-loader": "^9.0.2",
     "vazir-font": "^26.0.2",
