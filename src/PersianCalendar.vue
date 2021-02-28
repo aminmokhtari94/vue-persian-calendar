@@ -40,6 +40,7 @@
             </div>
             <!--WEEKS ROW-->
             <div
+                id="vpc_days_body"
                 v-for="week in periodWeeks"
                 :key="week.uid"
                 :class="weekClassObject"
