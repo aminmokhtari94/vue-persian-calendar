@@ -73,7 +73,7 @@
                   v-for="day in week"
                   :key="day.uid"
                   :class="dayClassObject(day)"
-                  @click="$emit('on-day-click', day)"
+                  @click="emitEvent(day, $event)"
               >
                 <div class="vpc_day-number">{{ day.format('jD').toPersianDigits() }}</div>
               </div>
@@ -137,6 +137,12 @@ export default {
       type: Boolean,
       default () {
         return false
+      }
+    },
+    disablePastDays: {
+      type: Boolean,
+      default () {
+        return false;
       }
     }
   },
@@ -454,6 +460,15 @@ export default {
       return diff
       //const diff = e.diff(s, 'day')
       //if (parseInt(e.format('jD')) > parseInt(s.format('jD'))) return parseInt(e.format('jD')) - parseInt(s.format('jD'))
+    },
+    emitEvent(day, $event) {
+      if (this.disablePastDays) {
+        if (!day.isBefore(this.$moment(), 'day')) {
+          this.$emit('on-day-click', day);
+        } else {
+          $event.stopPropagation();
+        }
+      }
     }
   }
 }
