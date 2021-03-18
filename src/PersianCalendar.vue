@@ -142,7 +142,7 @@ export default {
     disablePastDays: {
       type: Boolean,
       default () {
-        return false;
+        return false
       }
     }
   },
@@ -461,12 +461,12 @@ export default {
       //const diff = e.diff(s, 'day')
       //if (parseInt(e.format('jD')) > parseInt(s.format('jD'))) return parseInt(e.format('jD')) - parseInt(s.format('jD'))
     },
-    emitDay(day, $event) {
+    emitDay (day, $event) {
       if (this.disablePastDays) {
         if (!day.isBefore(this.$moment(), 'day')) {
-          this.$emit('on-day-click', day);
+          this.$emit('on-day-click', day)
         } else {
-          $event.stopPropagation();
+          $event.stopPropagation()
         }
       }
     }
