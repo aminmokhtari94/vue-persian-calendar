@@ -63,6 +63,7 @@ Vue.use(PersianCalendar)
 | hide-event-times      | Boolean  | false     | If set, Event date and time won't show                 |
 | hide-month-shadow     | Boolean  | false     | If set, Shadow of days not in showing month won't show |
 | hide-past-days-shadow | Boolean  | false     | If set, Shadow of past days won't show                 |
+| disable-past-days     | Boolean  | false     | If set, it makes past days unclikable and they won't emit `on-day-click`                |
 
 ## Events
 
