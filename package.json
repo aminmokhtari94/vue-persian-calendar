@@ -45,18 +45,18 @@
     "vue-jalali-moment": "^1.0.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.4.6",
-    "@vue/cli-plugin-eslint": "~4.4.6",
-    "@vue/cli-service": "~4.4.6",
+    "@vue/cli-plugin-babel": "^4.5.12",
+    "@vue/cli-plugin-eslint": "~4.5.12",
+    "@vue/cli-service": "~4.5.12",
     "babel-eslint": "^10.1.0",
-    "core-js": "^3.6.5",
-    "eslint": "^6.7.0",
-    "eslint-plugin-vue": "^6.2.2",
-    "sass": "^1.26.10",
-    "sass-loader": "^9.0.2",
-    "vazir-font": "^26.0.2",
-    "vue": "^2.6.11",
-    "vue-template-compiler": "^2.6.11"
+    "core-js": "^3.9.1",
+    "eslint": "^7.23.0",
+    "eslint-plugin-vue": "^7.8.0",
+    "sass": "^1.32.8",
+    "sass-loader": "^11.0.1",
+    "vazir-font": "^27.2.2",
+    "vue": "^2.6.12",
+    "vue-template-compiler": "^2.6.12"
   },
   "browserslist": [
     "> 1%",
